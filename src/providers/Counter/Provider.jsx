@@ -15,7 +15,7 @@ const CounterProvider = ({ children }) => {
 
     const contextValue = useMemo(() => {
         return [state, methods]
-    }, [state]);
+    }, [state, methods]);
 
     return <CounterContext.Provider value={contextValue}>
         {children}
