@@ -1,17 +1,24 @@
 import './App.css';
-import {useReducer} from "react";
 
-import counterReducer, { increment, decrement, setValue } from './store/counter'
+import { BrowserRouter, Switch, Route, Link } from 'react-router-dom'
+
+import CounterContainer from "./containers/Counter/CounterContainer";
 
 function App() {
-  const [state, dispatch] = useReducer(counterReducer, 0);
-
-  return (
+    return (
     <div className="App">
-      <h1>{state}</h1>
-      <button onClick={() => dispatch(increment())}>Increment</button>
-      <button onClick={() => dispatch(decrement())}>Decrement</button>
-      <button onClick={() => dispatch(setValue(0))}>Reset</button>
+        <BrowserRouter>
+            <Switch>
+                <Route path="/counter">
+                    <CounterContainer />
+                </Route>
+                <Route>
+                    <h1>Board ninja</h1>
+                    coming soon...
+                </Route>
+            </Switch>
+        </BrowserRouter>
+
     </div>
   );
 }

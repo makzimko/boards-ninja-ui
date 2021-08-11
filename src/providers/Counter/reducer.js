@@ -1,6 +1,6 @@
-const INCREMENT = 'counter/increment';
-const DECREMENT = 'counter/decrement';
-const SET_VALUE = 'counter/setValue';
+const INCREMENT = 'Counter/increment';
+const DECREMENT = 'Counter/decrement';
+const SET_VALUE = 'Counter/setValue';
 
 const counterReducer = (state = 0, action) => {
     switch (action.type) {
