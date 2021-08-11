@@ -1,6 +1,6 @@
 import './App.css';
 
-import { BrowserRouter, Switch, Route } from 'react-router-dom'
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom'
 
 import CounterContainer from "./containers/Counter/CounterContainer";
 import BacklogContainer from "./containers/Backlog/BacklogContainer";
@@ -25,8 +25,7 @@ function App() {
                     <EntityDetails />
                 </Route>
                 <Route>
-                    <h1>Board ninja</h1>
-                    coming soon...
+                    <Redirect to="/login" />
                 </Route>
             </Switch>
         </BrowserRouter>
