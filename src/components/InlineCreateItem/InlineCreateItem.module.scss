@@ -1,0 +1,26 @@
+.wrapper {
+  display: flex;
+  position: relative;
+  border: 0;
+  padding: 0;
+}
+
+.name-input {
+  border-color: transparent;
+  flex: 1;
+  font-size: 16px;
+  line-height: 20px;
+  padding: 8px 62px 8px 12px;
+}
+
+.create-button {
+  margin: 0;
+  border: none;
+  font-size: 16px;
+  background: transparent;
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  bottom: 2px;
+  width: 50px;
+}

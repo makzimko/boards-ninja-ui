@@ -1,18 +1,28 @@
-const {useCallback, useState} = require("react");
+import {createRef, useCallback, useState} from "react";
+import classNames from "classnames";
 
-const InlineCreateItem = ({ onCreate }) => {
+import styles from './InlineCreateItem.module.scss'
+
+const InlineCreateItem = ({ onCreate, containerClassName }) => {
     const [name, setName] = useState('');
+    const inputRef = createRef();
 
     const onChange = useCallback((e) => setName(e.target.value), []);
-    const onSubmit = useCallback(() => {
-        onCreate(name);
-        setName('');
-    }, [name, onCreate])
+    const onSubmit = useCallback((e) => {
+        e.preventDefault();
 
-    return <>
-        <input value={name} onChange={onChange} />
-        <button onClick={onSubmit}>Create</button>
-    </>
+        if (name.length) {
+            onCreate(name);
+            setName('');
+        }
+
+        inputRef.current.focus();
+    }, [name, onCreate, inputRef])
+
+    return <form onSubmit={onSubmit} className={classNames(containerClassName, styles.wrapper)}>
+        <input value={name} onChange={onChange} className={styles['name-input']} ref={inputRef} placeholder="What should be done?" />
+        <button type="submit" className={styles['create-button']}>➕</button>
+    </form>;
 };
 
 export default InlineCreateItem;

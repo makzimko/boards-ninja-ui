@@ -1,6 +1,9 @@
+import styles from './WorkItem.module.scss'
+
 const WorkItem = ({ id, name, resolved }) => {
-    return <div style={{ textDecoration: resolved ? 'line-through': ''}}>
-        {name}
+    return <div className={styles.wrapper}>
+        <div className={styles['work-item-name']}>{name}</div>
+        <div className={styles['work-item-number']}>#{id}</div>
     </div>
 };
 

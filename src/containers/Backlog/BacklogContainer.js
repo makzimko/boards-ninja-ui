@@ -1,6 +1,9 @@
+import {useCallback, useState} from "react";
+
 import WorkItemsList from "../../components/WorkItemsList/WorkItemsList";
 import InlineCreateItem from "../../components/InlineCreateItem/InlineCreateItem";
-import {useCallback, useState} from "react";
+
+import styles from './BacklogContainer.module.scss'
 
 const initialList = [{
     id: 1,
@@ -25,10 +28,11 @@ const BacklogContainer = () => {
     }, [setList, list])
 
     return (
-        <>
-            <WorkItemsList items={list} />
-            <InlineCreateItem onCreate={onCreate} />
-        </>
+        <div className={styles.wrapper}>
+            <div className={styles.title}>Backlog</div>
+            <WorkItemsList items={list} containerClassName={styles['work-items-list']} />
+            <InlineCreateItem onCreate={onCreate} containerClassName={styles['create-item']} />
+        </div>
     )
 };
 

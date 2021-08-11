@@ -1,0 +1,27 @@
+.wrapper {
+    padding: 12px;
+
+    border-bottom: solid 1px #e5e5e5;
+    font-size: 16px;
+    display: flex;
+
+    &:hover {
+        background: #f9f9f9;
+    }
+}
+
+.work-item-name {
+    flex: 1;
+    line-height: 20px;
+    text-align: left;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.work-item-number {
+    color: #778899;
+    text-align: right;
+    width: 50px;
+}
