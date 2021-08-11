@@ -4,6 +4,7 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom'
 
 import CounterContainer from "./containers/Counter/CounterContainer";
 import BacklogContainer from "./containers/Backlog/BacklogContainer";
+import EntityDetails from "./containers/EntityDetails/EntityDetails";
 
 function App() {
     return (
@@ -15,6 +16,9 @@ function App() {
                 </Route>
                 <Route path="/backlog">
                     <BacklogContainer />
+                </Route>
+                <Route path="/browse/:id">
+                    <EntityDetails />
                 </Route>
                 <Route>
                     <h1>Board ninja</h1>
