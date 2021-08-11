@@ -5,12 +5,16 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import CounterContainer from "./containers/Counter/CounterContainer";
 import BacklogContainer from "./containers/Backlog/BacklogContainer";
 import EntityDetails from "./containers/EntityDetails/EntityDetails";
+import LoginForm from "./containers/LoginForm/LoginForm";
 
 function App() {
     return (
     <div className="App">
         <BrowserRouter>
             <Switch>
+                <Route path="/login">
+                    <LoginForm />
+                </Route>
                 <Route path="/counter">
                     <CounterContainer />
                 </Route>
