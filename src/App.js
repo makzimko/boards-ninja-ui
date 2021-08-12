@@ -2,6 +2,8 @@ import './App.css';
 
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom'
 
+import './utils/request';
+
 import CounterContainer from "./containers/Counter/CounterContainer";
 import BacklogContainer from "./containers/Backlog/BacklogContainer";
 import EntityDetails from "./containers/EntityDetails/EntityDetails";
