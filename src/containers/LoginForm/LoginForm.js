@@ -1,18 +1,23 @@
-import { default as LoginFormComponent} from '../../components/LoginForm/LoginForm';
+import { useContext } from "react";
+import { Redirect } from 'react-router-dom';
 
+import { default as LoginFormComponent} from '../../components/LoginForm/LoginForm';
 import styles from './LoginForm.module.css'
-import AuthProvider from "../../providers/Auth/Provider";
 import AuthContext from "../../providers/Auth/context";
 
 const LoginForm = () => {
-    return <AuthProvider>
-        <div className={styles.wrapper}>
+    const [{ userInfo }] = useContext(AuthContext);
+
+    if (userInfo) {
+        return <Redirect to="/" />
+    } else {
+        return <div className={styles.wrapper}>
             <div className={styles.title}>Login to Boards Ninja</div>
             <AuthContext.Consumer>
-                {([_, { login }]) => <LoginFormComponent onLogin={login} /> }
+                {([{ loginError }, { login }]) => <LoginFormComponent onLogin={login} error={loginError} /> }
             </AuthContext.Consumer>
         </div>
-    </AuthProvider>
+    }
 };
 
 export default LoginForm;

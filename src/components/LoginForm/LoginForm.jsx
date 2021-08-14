@@ -3,7 +3,7 @@ import { useCallback, useState } from "react";
 import styles from './LoginForm.module.scss'
 import classNames from "classnames";
 
-const LoginForm = ({ onLogin }) => {
+const LoginForm = ({ onLogin, error }) => {
     const [login, setLogin] = useState('');
     const [password, setPassword] = useState('');
 
@@ -23,6 +23,7 @@ const LoginForm = ({ onLogin }) => {
         <form onSubmit={onSubmit}>
             <input className={classNames(styles.input)} value={login} onChange={onChangeLogin} placeholder="Login"/>
             <input className={classNames(styles.input)} value={password} onChange={onChangePassword } type="password" placeholder="Password" />
+            {error && <div className={styles.error}>{error}</div>}
             <button className={styles['submit-button']} type="submit">Login</button>
         </form>
     </div>
