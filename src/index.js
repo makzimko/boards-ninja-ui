@@ -1,5 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {RecoilRoot} from "recoil";
+
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
@@ -7,9 +9,11 @@ import AuthProvider from "./providers/Auth/Provider";
 
 ReactDOM.render(
   <React.StrictMode>
-      <AuthProvider>
-          <App />
-      </AuthProvider>
+      <RecoilRoot>
+          <AuthProvider>
+              <App />
+          </AuthProvider>
+      </RecoilRoot>
   </React.StrictMode>,
   document.getElementById('root')
 );
