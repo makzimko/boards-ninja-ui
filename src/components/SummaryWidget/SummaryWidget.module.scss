@@ -1,0 +1,26 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.content {
+  flex: 1;
+}
+
+.bottom {
+  padding: 12px;
+}
+
+.logout-button {
+  background: #f9f9f9;
+  border-radius: 4px;
+  padding: 12px;
+  text-align: center;
+}
+
+.link {
+  margin: 16px;
+  display: block;
+  text-decoration: underline;
+}
