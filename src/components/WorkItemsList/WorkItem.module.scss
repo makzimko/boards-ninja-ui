@@ -26,3 +26,13 @@
     text-align: right;
     width: 50px;
 }
+
+.resolved {
+    .work-item-number {
+        text-decoration: line-through;
+    }
+
+    .work-item-name {
+        color: #778899;
+    }
+}

@@ -1,7 +1,7 @@
 import {useEffect, useMemo, useState} from "react";
+import axios from "axios";
 
 import AuthContext from "./context";
-import axios from "axios";
 
 const AuthProvider = ({ children }) => {
     const [loginError, setLoginError] = useState(undefined);

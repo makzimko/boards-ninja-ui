@@ -9,11 +9,11 @@ import AuthProvider from "./providers/Auth/Provider";
 
 ReactDOM.render(
   <React.StrictMode>
-      <RecoilRoot>
-          <AuthProvider>
-              <App />
-          </AuthProvider>
-      </RecoilRoot>
+      <AuthProvider>
+          <RecoilRoot>
+            <App />
+          </RecoilRoot>
+      </AuthProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
