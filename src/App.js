@@ -20,26 +20,28 @@ const App = () => {
         <div className="App">
             <BrowserRouter>
                 <Header />
-                <Switch>
-                    <Route path="/login">
-                        <LoginForm/>
-                    </Route>
-                    <Route path="/counter">
-                        <CounterContainer/>
-                    </Route>
-                    <Route path="/backlog">
-                        <BacklogContainer/>
-                    </Route>
-                    <Route path="/archive">
-                        <ArchiveContainer />
-                    </Route>
-                    <Route path="/browse/:id">
-                        <EntityDetails/>
-                    </Route>
-                    <Route>
-                        <MainPageContainer />
-                    </Route>
-                </Switch>
+                <div className="content">
+                    <Switch>
+                        <Route path="/login">
+                            <LoginForm/>
+                        </Route>
+                        <Route path="/counter">
+                            <CounterContainer/>
+                        </Route>
+                        <Route path="/backlog">
+                            <BacklogContainer/>
+                        </Route>
+                        <Route path="/archive">
+                            <ArchiveContainer />
+                        </Route>
+                        <Route path="/browse/:id">
+                            <EntityDetails/>
+                        </Route>
+                        <Route>
+                            <MainPageContainer />
+                        </Route>
+                    </Switch>
+                </div>
             </BrowserRouter>
         </div>
     ) : <Loader />;

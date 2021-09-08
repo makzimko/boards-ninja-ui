@@ -17,7 +17,6 @@ const ArchiveContainer = () => {
     return (
         <div className={styles.wrapper}>
             <ListHeader title="Archive" counter={workItemsArchive.length} />
-            <div className={styles.title}>Archive</div>
             <WorkItemsList items={workItemsArchive} containerClassName={styles['work-items-list']} />
         </div>
     )
