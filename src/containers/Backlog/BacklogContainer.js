@@ -6,6 +6,7 @@ import InlineCreateItem from "../../components/InlineCreateItem/InlineCreateItem
 import workItemsListState, {useWorkItemsList} from "../../atoms/workItems/workItemsList";
 
 import styles from './BacklogContainer.module.scss'
+import ListHeader from "../../ui/ListHeader/ListHeader";
 
 
 const BacklogContainer = () => {
@@ -24,7 +25,7 @@ const BacklogContainer = () => {
 
     return (
         <div className={styles.wrapper}>
-            <div className={styles.title}>Backlog</div>
+            <ListHeader title="Backlog" counter={workItemsList.length} />
             <WorkItemsList items={workItemsList} containerClassName={styles['work-items-list']} />
             <InlineCreateItem onCreate={onCreate} containerClassName={styles['create-item']} />
         </div>
