@@ -11,6 +11,7 @@ import AuthContext from "./providers/Auth/context";
 import Loader from './components/Loader/Loader'
 import MainPageContainer from "./containers/MainPage/MainPageContainer";
 import Header from "./components/Header/Header";
+import ArchiveContainer from "./containers/Archive/ArchiveContiner";
 
 const App = () => {
     const [{ isAuthPerformed }] = useContext(AuthContext);
@@ -28,6 +29,9 @@ const App = () => {
                     </Route>
                     <Route path="/backlog">
                         <BacklogContainer/>
+                    </Route>
+                    <Route path="/archive">
+                        <ArchiveContainer />
                     </Route>
                     <Route path="/browse/:id">
                         <EntityDetails/>
