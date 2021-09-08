@@ -1,5 +1,5 @@
 import { WorkItem } from "../../types/workItems";
-import {useCallback} from "react";
+import {useCallback, useMemo} from "react";
 
 type WorkItemDetailsProps = {
     data: WorkItem,
@@ -13,10 +13,32 @@ const WorkItemDetails = ({ data, onUpdate }: WorkItemDetailsProps) => {
         })
     }, [data.resolved, onUpdate]);
 
+    const moveToArchive = useCallback(() => {
+        onUpdate({
+            archived: true
+        })
+    }, [changeResolvedStatus]);
+
+    const status = useMemo(() => {
+        if (data.archived) {
+            return 'archived'
+        }
+        if (data.resolved) {
+            return 'resolved'
+        } else {
+            return 'unresolved'
+        }
+    }, [data.resolved, data.archived]);
+
     return <div>
         <h3>#{data.id} {data.name}</h3>
-        <div>Status: {data.resolved ? 'resolved' : 'unresolved'}</div>
-        <button onClick={changeResolvedStatus}>change</button>
+        <div>Status: {status}</div>
+        {!data.archived &&
+            <>
+                <button onClick={changeResolvedStatus}>Change resolving status</button>
+                <button onClick={moveToArchive}>Move to archive</button>
+            </>
+        }
     </div>
 };
 
