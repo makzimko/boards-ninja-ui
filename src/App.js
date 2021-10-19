@@ -12,39 +12,37 @@ import Loader from './components/Loader/Loader'
 import MainPageContainer from "./containers/MainPage/MainPageContainer";
 import Header from "./components/Header/Header";
 import ArchiveContainer from "./containers/Archive/ArchiveContiner";
+import DefaultLayout from "./components/DefaulsLayout/DefaultLayout";
 
 const App = () => {
-    const [{ isAuthPerformed }] = useContext(AuthContext);
+    const [{isAuthPerformed}] = useContext(AuthContext);
 
     return isAuthPerformed ? (
-        <div className="App">
-            <BrowserRouter>
-                <Header />
-                <div className="content">
-                    <Switch>
-                        <Route path="/login">
-                            <LoginForm/>
-                        </Route>
-                        <Route path="/counter">
-                            <CounterContainer/>
-                        </Route>
-                        <Route path="/backlog">
-                            <BacklogContainer/>
-                        </Route>
-                        <Route path="/archive">
-                            <ArchiveContainer />
-                        </Route>
-                        <Route path="/browse/:id">
-                            <EntityDetails/>
-                        </Route>
-                        <Route>
-                            <MainPageContainer />
-                        </Route>
-                    </Switch>
-                </div>
-            </BrowserRouter>
-        </div>
-    ) : <Loader />;
+        <BrowserRouter>
+            <DefaultLayout>
+                <Switch>
+                    <Route path="/login">
+                        <LoginForm/>
+                    </Route>
+                    <Route path="/counter">
+                        <CounterContainer/>
+                    </Route>
+                    <Route path="/backlog">
+                        <BacklogContainer/>
+                    </Route>
+                    <Route path="/archive">
+                        <ArchiveContainer/>
+                    </Route>
+                    <Route path="/browse/:id">
+                        <EntityDetails/>
+                    </Route>
+                    <Route>
+                        <MainPageContainer/>
+                    </Route>
+                </Switch>
+            </DefaultLayout>
+        </BrowserRouter>
+    ) : <Loader/>;
 }
 
 export default App;

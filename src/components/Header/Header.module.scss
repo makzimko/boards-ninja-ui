@@ -1,9 +1,11 @@
+@import '../../variables.scss';
+
 .wrapper {
-  background: #424c57;
+  background: $primary-bg-1;
   color: white;
   padding: 12px;
   text-align: center;
   font-weight: bold;
-  font-family: monospace;
+  font-family: sans-serif;
   font-size: 16px;
 }
