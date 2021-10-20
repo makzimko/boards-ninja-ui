@@ -1,13 +1,11 @@
 @import '../../variables.scss';
 
 .wrapper {
-  padding: 16px;
+  margin: 16px;
   text-align: left;
   display: flex;
   line-height: 24px;
-  position: sticky;
-  top: 0;
-  background: $primary-bg-1;
+
 }
 
 .title {

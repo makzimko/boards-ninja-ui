@@ -25,9 +25,11 @@ const BacklogContainer = () => {
 
     return (
         <div className={styles.wrapper}>
-            <ListHeader title="Backlog" counter={workItemsList.length} />
+            <div className={styles['top-panel']}>
+                <ListHeader title="Backlog" counter={workItemsList.length} />
+                <InlineCreateItem onCreate={onCreate} containerClassName={styles['create-item']} />
+            </div>
             <WorkItemsList items={workItemsList} containerClassName={styles['work-items-list']} />
-            <InlineCreateItem onCreate={onCreate} containerClassName={styles['create-item']} />
         </div>
     )
 };
