@@ -5,7 +5,7 @@ import { WorkItem } from "../../types/workItems";
 import axios from "axios";
 
 const workItemsListState = atom<WorkItem[]>({
-    key: 'WorkItemsList',
+    key: 'WorkItems',
     default: []
 });
 

@@ -1,5 +1,5 @@
 export type WorkItem = {
-    id: string,
+    id: number,
     name: string,
     resolved: boolean
     archived: boolean

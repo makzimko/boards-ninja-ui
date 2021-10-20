@@ -10,9 +10,9 @@ import LoginForm from "./containers/LoginForm/LoginForm";
 import AuthContext from "./providers/Auth/context";
 import Loader from './components/Loader/Loader'
 import MainPageContainer from "./containers/MainPage/MainPageContainer";
-import Header from "./components/Header/Header";
 import ArchiveContainer from "./containers/Archive/ArchiveContiner";
 import DefaultLayout from "./components/DefaulsLayout/DefaultLayout";
+import Test from "./containers/Test/Test";
 
 const App = () => {
     const [{isAuthPerformed}] = useContext(AuthContext);
@@ -35,6 +35,9 @@ const App = () => {
                     </Route>
                     <Route path="/browse/:id">
                         <EntityDetails/>
+                    </Route>
+                    <Route path="/test">
+                        <Test />
                     </Route>
                     <Route>
                         <MainPageContainer/>

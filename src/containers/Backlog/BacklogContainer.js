@@ -3,7 +3,7 @@ import {useRecoilValue} from "recoil";
 
 import WorkItemsList from "../../components/WorkItemsList/WorkItemsList";
 import InlineCreateItem from "../../components/InlineCreateItem/InlineCreateItem";
-import workItemsListState, {useWorkItemsList} from "../../atoms/workItems/workItemsList";
+import workItemsListState, {useWorkItemsList} from "../../atoms/workItems1/workItemsList";
 
 import styles from './BacklogContainer.module.scss'
 import ListHeader from "../../ui/ListHeader/ListHeader";

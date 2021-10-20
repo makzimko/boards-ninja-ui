@@ -3,7 +3,7 @@ import {useRecoilValue} from "recoil";
 
 import styles from "../Archive/ArchiveContainer.module.scss";
 import WorkItemsList from "../../components/WorkItemsList/WorkItemsList";
-import workItemsArchiveState, {useWorkItemsArchive} from "../../atoms/workItems/workItemsArchive";
+import workItemsArchiveState, {useWorkItemsArchive} from "../../atoms/workItems1/workItemsArchive";
 import ListHeader from "../../ui/ListHeader/ListHeader";
 
 const ArchiveContainer = () => {
