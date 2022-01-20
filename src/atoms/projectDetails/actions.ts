@@ -7,14 +7,23 @@ import {ProjectDetails} from "./types";
 
 const useProjectDetailsActions = () => {
     const getProjectInfo = useRecoilCallback(({ set }) => async (projectKey: string) => {
-        set(projectDetailsLoadingState, LOADING.PENDING);
+        set(projectDetailsState, { state: LOADING.PENDING })
 
         try {
             const { data } = await axios.get<ProjectDetails>(`/v1/projects/${projectKey}`);
 
-            set(projectDetailsLoadingState, LOADING.SUCCESS);
-            set(projectDetailsState, data);
+            set(projectDetailsState, {
+                state: LOADING.SUCCESS,
+                data
+            });
         } catch (e) {
+            set(projectDetailsState, {
+                state: LOADING.ERROR,
+                error: {
+                    code: e.code,
+                    message: e.message
+                }
+            })
             set(projectDetailsLoadingState, LOADING.ERROR);
         }
     });

@@ -8,25 +8,24 @@ const ProjectDetails = () => {
     const { key } = useParams();
     const { getProjectInfo } = useProjectDetailsActions();
 
-    const projectDetailsLoading = useRecoilValue(projectDetailsLoadingState);
     const projectDetails = useRecoilValue(projectDetailsState);
 
     useEffect(() => {
         getProjectInfo(key)
     }, []);
 
-    if ([LOADING.INITIAL, LOADING.PENDING].includes(projectDetailsLoading)) {
-        return 'Waiting for project details loading...'
-    }
-
-    if (projectDetailsLoading === LOADING.ERROR ) {
+    if (projectDetails.state === LOADING.ERROR ) {
         return 'Error occurred while loading data!'
     }
 
-    return <div>
-        <h1>{projectDetails!.name}</h1>
-        <h4>{projectDetails!.key}</h4>
-    </div>
+    if (projectDetails.state === LOADING.SUCCESS ) {
+        return <div>
+            <h1>{projectDetails.data.name}</h1>
+            <h4>{projectDetails.data.key}</h4>
+        </div>
+    }
+
+    return 'Waiting for project details loading...'
 };
 
 export default ProjectDetails;

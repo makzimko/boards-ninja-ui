@@ -1,10 +1,8 @@
-import {atom} from "recoil";
 import {ProjectDetails} from "./types";
 import loadingState from "../loading/loading";
+import loadableData from "../loadableData/loadableData";
 
-export const projectDetailsState = atom<ProjectDetails | undefined>({
-    key: 'ProjectDetails',
-    default: undefined
-});
+
+export const projectDetailsState = loadableData<ProjectDetails>('ProjectDetails');
 
 export const projectDetailsLoadingState = loadingState("ProjectDetails");
