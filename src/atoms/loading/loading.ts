@@ -11,7 +11,7 @@ export type Loading = LOADING;
 
 const loadingState = atomFamily<Loading, string>({
     key: 'Loading',
-    default: () => LOADING.INITIAL
+    default: LOADING.INITIAL
 });
 
 export default loadingState;

@@ -5,17 +5,14 @@ import {RecoilRoot} from "recoil";
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import AuthProvider from "./providers/Auth/Provider";
 
 ReactDOM.render(
-  <React.StrictMode>
-      <AuthProvider>
-          <RecoilRoot>
-            <App />
-          </RecoilRoot>
-      </AuthProvider>
-  </React.StrictMode>,
-  document.getElementById('root')
+    <React.StrictMode>
+        <RecoilRoot>
+            <App/>
+        </RecoilRoot>
+    </React.StrictMode>,
+    document.getElementById('root')
 );
 
 reportWebVitals();

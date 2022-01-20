@@ -1,11 +1,12 @@
-import { useContext } from "react";
+import {useRecoilValue} from "recoil";
 
 import Welcome from "../../components/Welcome/Welcome";
-import AuthContext from "../../providers/Auth/context";
 import SummaryWidget from "../../components/SummaryWidget/SummaryWidget";
+import {userInfoState} from "../../atoms/auth";
 
 const MainPageContainer = () => {
-    const [{ userInfo }] = useContext(AuthContext);
+    const userInfo = useRecoilValue(userInfoState);
+
     return <>
         { !userInfo && <Welcome /> }
         { !!userInfo && <SummaryWidget />}
