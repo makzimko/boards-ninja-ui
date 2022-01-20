@@ -5,6 +5,7 @@ import styles from './SummaryWidget.module.scss';
 const SummaryWidget = () => {
     return <div className={styles.wrapper}>
         <div className={styles.content}>
+            <Link to="/projects" className={styles.link}>Projects</Link>
             <Link to="/backlog" className={styles.link}>Backlog</Link>
             <Link to="/archive" className={styles.link}>Archive</Link>
         </div>

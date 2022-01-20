@@ -7,16 +7,17 @@ import CounterContainer from "./containers/Counter/CounterContainer";
 import BacklogContainer from "./containers/Backlog/BacklogContainer";
 import EntityDetails from "./containers/EntityDetails/EntityDetails";
 import LoginForm from "./containers/LoginForm/LoginForm";
-import AuthContext from "./providers/Auth/context";
 import Loader from './components/Loader/Loader'
 import MainPageContainer from "./containers/MainPage/MainPageContainer";
 import ArchiveContainer from "./containers/Archive/ArchiveContiner";
 import DefaultLayout from "./components/DefaulsLayout/DefaultLayout";
+import ProjectsList from "./containers/ProjectsList/ProjectsList";
 import Test from "./containers/Test/Test";
 
 import useAuthActions, { authLoadingState } from "./atoms/auth";
 import {useRecoilValue} from "recoil";
 import {LOADING} from "./atoms/loading/loading";
+import ProjectDetails from "./containers/ProjectDetails/ProjectDetails";
 
 const App = () => {
     const isPerformed = useRecoilValue(authLoadingState);
@@ -31,6 +32,12 @@ const App = () => {
             <Switch>
                 <Route path="/login">
                     <LoginForm/>
+                </Route>
+                <Route path="/projects" exact>
+                    <ProjectsList />
+                </Route>
+                <Route path="/projects/:key" exact>
+                    <ProjectDetails />
                 </Route>
                 <Route path="/counter">
                     <CounterContainer/>
