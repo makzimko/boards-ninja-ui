@@ -1,4 +1,4 @@
-import useProjectDetailsActions, {projectDetailsLoadingState, projectDetailsState} from "../../atoms/projectDetails";
+import useProjectDetails from "../../atoms/projectDetails";
 import {useEffect} from "react";
 import {useParams} from "react-router-dom";
 import {useRecoilValue} from "recoil";
@@ -6,13 +6,12 @@ import {LOADING} from "../../atoms/loading/loading";
 
 const ProjectDetails = () => {
     const { key } = useParams();
-    const { getProjectInfo } = useProjectDetailsActions();
 
-    const projectDetails = useRecoilValue(projectDetailsState);
+    const [projectDetails, { getProjectInfo }] = useProjectDetails(key);
 
     useEffect(() => {
-        getProjectInfo(key)
-    }, []);
+        getProjectInfo();
+    }, [])
 
     if (projectDetails.state === LOADING.ERROR ) {
         return 'Error occurred while loading data!'

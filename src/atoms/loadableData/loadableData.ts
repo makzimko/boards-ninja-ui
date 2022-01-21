@@ -1,7 +1,7 @@
 import {atom} from "recoil";
 import {LOADING} from "../loading/loading";
 
-type LoadableData<T> = {
+export type LoadableData<T> = {
     state: LOADING.INITIAL
 }| {
     state: LOADING.PENDING,

@@ -24,7 +24,7 @@ const ProjectsList = () => {
 
     return <ul>
         {projectsList.map(({ name, key }) =>
-            <li><Link to={`/projects/${key}`} className={styles.link}>{name}</Link></li>
+            <li key={key}><Link to={`/projects/${key}`} className={styles.link}>{name}</Link></li>
         )}
     </ul>
 };

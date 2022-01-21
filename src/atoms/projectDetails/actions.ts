@@ -1,16 +1,16 @@
 import {useRecoilCallback} from "recoil";
 import axios from "axios";
 
-import {projectDetailsLoadingState, projectDetailsState} from "./atoms";
+import {projectDetailsState} from "./atoms";
 import {LOADING} from "../loading/loading";
-import {ProjectDetails} from "./types";
+import {ProjectDetailsActions, ProjectDetailsData} from "./types";
 
-const useProjectDetailsActions = () => {
-    const getProjectInfo = useRecoilCallback(({ set }) => async (projectKey: string) => {
+const useProjectDetailsActions = (projectKey: string): ProjectDetailsActions => {
+    const getProjectInfo = useRecoilCallback(({ set }) => async () => {
         set(projectDetailsState, { state: LOADING.PENDING })
 
         try {
-            const { data } = await axios.get<ProjectDetails>(`/v1/projects/${projectKey}`);
+            const { data } = await axios.get<ProjectDetailsData>(`/v1/projects/${projectKey}`);
 
             set(projectDetailsState, {
                 state: LOADING.SUCCESS,
@@ -23,8 +23,7 @@ const useProjectDetailsActions = () => {
                     code: e.code,
                     message: e.message
                 }
-            })
-            set(projectDetailsLoadingState, LOADING.ERROR);
+            });
         }
     });
 

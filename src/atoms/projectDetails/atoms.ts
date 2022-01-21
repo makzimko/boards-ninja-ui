@@ -1,8 +1,4 @@
-import {ProjectDetails} from "./types";
-import loadingState from "../loading/loading";
 import loadableData from "../loadableData/loadableData";
+import {ProjectDetailsData} from "./types";
 
-
-export const projectDetailsState = loadableData<ProjectDetails>('ProjectDetails');
-
-export const projectDetailsLoadingState = loadingState("ProjectDetails");
+export const projectDetailsState = loadableData<ProjectDetailsData>('ProjectDetails');
