@@ -1,6 +1,7 @@
 import {atom, selector} from "recoil";
+
 import {UnitsListData} from "./types";
-import loadingState from "../loading/loading";
+import loadingState, {LOADING} from "../loading/loading";
 
 export const UnitsListItemsState = atom<UnitsListData['items']>({
     key: 'UnitsListItems',
@@ -22,10 +23,11 @@ export const UnitListCountState = selector<UnitsListData['count']>({
 export const UnitsListHasMoreState = selector<UnitsListData['hasMore']>({
     key: 'UnitListHasMore',
     get: ({ get }) => {
+        const loadingState = get(UnitsListLoadingState);
         const totalCount = get(UnitsListTotalCountState);
         const count = get(UnitListCountState);
 
-        return totalCount === 0 || totalCount > count;
+        return loadingState === LOADING.INITIAL && totalCount === 0 || totalCount > count;
     }
 });
 
