@@ -23,6 +23,7 @@ const App: FC = () => {
             </div>
           }
         >
+          <Route index element={<div>project details</div>} />
           <Route path="key" element={<div>project key</div>} />
         </Route>
         <Route index element={<h1>index</h1>} />
