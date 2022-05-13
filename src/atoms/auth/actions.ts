@@ -46,7 +46,11 @@ const useAuthActions = () => {
       }
   );
 
-  return { fetchUserInfo, performLogin };
+  const logout = useRecoilCallback(({ reset }) => () => {
+    reset(userInfoState);
+  });
+
+  return { fetchUserInfo, performLogin, logout };
 };
 
 export default useAuthActions;

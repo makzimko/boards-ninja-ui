@@ -14,6 +14,7 @@ import { useRecoilValue } from 'recoil';
 import { LOADING } from './atoms/loading/types';
 import AuthWrapper from './components/AuthWrapper/AuthWrapper';
 import LoginForm from './components/LoginForm/LoginForm';
+import HomePage from './pages/Home/HomePage';
 
 const App: FC = () => {
   const { fetchUserInfo } = useAuthActions();
@@ -49,12 +50,12 @@ const App: FC = () => {
         <Route
           path="login"
           element={
-            <AuthWrapper restricted={false} redirect="/dashboard">
+            <AuthWrapper restricted={false} redirect="/">
               <LoginForm />
             </AuthWrapper>
           }
         />
-        <Route index element={<h1>index</h1>} />
+        <Route index element={<HomePage />} />
         <Route path="*" element={<h1>fallback</h1>} />
       </Routes>
     </Router>
