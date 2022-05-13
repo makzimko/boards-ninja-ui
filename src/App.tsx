@@ -1,6 +1,7 @@
 import React, { FC, useEffect } from 'react';
 import {
   BrowserRouter as Router,
+  Link,
   Outlet,
   Route,
   Routes,
@@ -15,6 +16,7 @@ import { LOADING } from './atoms/loading/types';
 import AuthWrapper from './components/AuthWrapper/AuthWrapper';
 import LoginForm from './components/LoginForm/LoginForm';
 import HomePage from './pages/Home/HomePage';
+import ProjectsList from './components/ProjectsList/ProjectsList';
 
 const App: FC = () => {
   const { fetchUserInfo } = useAuthActions();
@@ -26,6 +28,10 @@ const App: FC = () => {
 
   return [LOADING.SUCCESS, LOADING.ERROR].includes(authLoading) ? (
     <Router>
+      <nav>
+        <Link to="/">Home</Link>
+        <Link to="/projects">Project</Link>
+      </nav>
       <Routes>
         <Route
           path="projects"
@@ -36,7 +42,14 @@ const App: FC = () => {
             </div>
           }
         >
-          <Route index element={<div>project details</div>} />
+          <Route
+            index
+            element={
+              <AuthWrapper>
+                <ProjectsList />
+              </AuthWrapper>
+            }
+          />
           <Route path="key" element={<div>project key</div>} />
         </Route>
         <Route

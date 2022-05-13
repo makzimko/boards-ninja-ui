@@ -10,7 +10,7 @@ export const userInfoState = atom<UserInfo>({
   default: undefined,
 });
 
-export const loginLoadingState = loadingState('LoadingState');
+export const loginLoadingState = loadingState('LoginLoading');
 
 export const loginErrorState = atom<string>({
   key: 'LoginError',
