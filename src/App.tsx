@@ -13,15 +13,14 @@ import useAuthActions, { authLoadingState } from './atoms/auth';
 import { useRecoilValue } from 'recoil';
 import { LOADING } from './atoms/loading/types';
 import AuthWrapper from './components/AuthWrapper/AuthWrapper';
+import LoginForm from './components/LoginForm/LoginForm';
 
 const App: FC = () => {
   const { fetchUserInfo } = useAuthActions();
   const authLoading = useRecoilValue(authLoadingState);
 
   useEffect(() => {
-    fetchUserInfo()
-      .then((a) => console.log('AUTH SUCCESS', a))
-      .catch((e) => console.log('AUTH FAIL', e));
+    fetchUserInfo();
   }, []);
 
   return [LOADING.SUCCESS, LOADING.ERROR].includes(authLoading) ? (
@@ -51,7 +50,7 @@ const App: FC = () => {
           path="login"
           element={
             <AuthWrapper restricted={false} redirect="/dashboard">
-              <>login</>
+              <LoginForm />
             </AuthWrapper>
           }
         />

@@ -1,7 +1,14 @@
 import { useRecoilCallback } from 'recoil';
-import axios from 'axios';
-import { authLoadingState, userInfoState } from './atoms';
+import axios, { AxiosError } from 'axios';
+import {
+  authLoadingState,
+  loginErrorState,
+  loginLoadingState,
+  userInfoState,
+} from './atoms';
 import { LOADING } from '../loading/types';
+import { UserInfo } from './types';
+import { AxiosErrorResponse } from '../../types/axios';
 
 const useAuthActions = () => {
   const fetchUserInfo = useRecoilCallback(({ set }) => async () => {
@@ -16,7 +23,30 @@ const useAuthActions = () => {
     }
   });
 
-  return { fetchUserInfo };
+  const performLogin = useRecoilCallback(
+    ({ set, reset }) =>
+      async (login: string, password: string) => {
+        set(loginLoadingState, LOADING.PENDING);
+        reset(loginErrorState);
+
+        try {
+          const { data } = await axios.post<UserInfo>('/v1/auth/login', {
+            login,
+            password,
+          });
+
+          set(loginLoadingState, LOADING.SUCCESS);
+          set(userInfoState, data);
+        } catch (e) {
+          const { response } = e as AxiosError<AxiosErrorResponse>;
+
+          set(loginLoadingState, LOADING.ERROR);
+          set(loginErrorState, response?.data.message ?? 'Uncaught error');
+        }
+      }
+  );
+
+  return { fetchUserInfo, performLogin };
 };
 
 export default useAuthActions;
