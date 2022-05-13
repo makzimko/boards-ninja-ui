@@ -1,28 +1,34 @@
 import React, { FC } from 'react';
+import {
+  BrowserRouter as Router,
+  Route,
+  Link,
+  Routes,
+  Outlet,
+} from 'react-router-dom';
 
-import logo from './logo.svg';
 import './utils/request';
 import './App.css';
 
 const App: FC = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit
-          <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <Router>
+      <Routes>
+        <Route
+          path="projects"
+          element={
+            <div>
+              projects root
+              <Outlet />
+            </div>
+          }
         >
-          Learn React
-        </a>
-      </header>
-    </div>
+          <Route path="key" element={<div>project key</div>} />
+        </Route>
+        <Route index element={<h1>index</h1>} />
+        <Route path="*" element={<h1>fallback</h1>} />
+      </Routes>
+    </Router>
   );
 };
 
