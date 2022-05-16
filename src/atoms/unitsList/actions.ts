@@ -12,7 +12,12 @@ const useUnitsListActions = () => {
 
         try {
           const { data } = await axios.get<UnitsList>(
-            `/v1/projects/${projectKey}/units`
+            `/v1/projects/${projectKey}/units`,
+            {
+              params: {
+                limit: 9999,
+              },
+            }
           );
 
           set(unitsListLoadingState, LOADING.SUCCESS);
