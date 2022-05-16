@@ -17,6 +17,7 @@ import AuthWrapper from './components/AuthWrapper/AuthWrapper';
 import LoginForm from './components/LoginForm/LoginForm';
 import HomePage from './pages/Home/HomePage';
 import ProjectsList from './components/ProjectsList/ProjectsList';
+import UnitsList from "./pages/UnitsList/UnitsList";
 
 const App: FC = () => {
   const { fetchUserInfo } = useAuthActions();
@@ -50,7 +51,7 @@ const App: FC = () => {
               </AuthWrapper>
             }
           />
-          <Route path="key" element={<div>project key</div>} />
+          <Route path=":projectKey" element={<UnitsList />} />
         </Route>
         <Route
           path="units"
