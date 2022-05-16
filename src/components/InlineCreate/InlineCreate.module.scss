@@ -1,0 +1,44 @@
+.wrapper {
+  display: flex;
+  gap: 2px;
+  border-right: 8px solid #D0D4E4;
+  padding-right: 2px;
+
+  .left-gutter {
+    width: 8px;
+    background: #E6E9EE;
+    order: -1;
+  }
+
+  .submit {
+    display: none;
+    border: none;
+    background: #C4C4C4;
+    color: white;
+    cursor: pointer;
+    padding: 8px 16px;
+  }
+
+  .input {
+    flex: 1;
+    padding: 7px;
+    border: 1px solid #E6E9EE;
+    line-height: 20px;
+    outline: none;
+    font-size: 16px;
+
+    &:focus, &:not([value='']) {
+      border-color: #C4C4C4;
+
+      &~.left-gutter {
+        background: #C4C4C4;
+      }
+
+      &~.submit {
+        display: block;
+      }
+    }
+  }
+
+
+}

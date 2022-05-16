@@ -9,7 +9,7 @@ import styles from './SimpleList.module.scss';
 export type SimpleListProps = {
   title: string;
   items: {
-    id: string;
+    _id: string;
     name: string;
   }[];
 } & ComponentProps;
@@ -22,8 +22,8 @@ const SimpleList: FC<SimpleListProps> = ({
   return (
     <div className={classNames(styles.wrapper, containerClassName)}>
       <div className={styles.title}>{title}</div>
-      {items.map(({ id, name }) => (
-        <SimpleListItem key={id} name={name} />
+      {items.map(({ _id, name }) => (
+        <SimpleListItem key={_id} name={name} />
       ))}
     </div>
   );

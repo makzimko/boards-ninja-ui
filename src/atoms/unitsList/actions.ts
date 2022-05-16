@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useRecoilCallback } from 'recoil';
 import { unitsListLoadingState, unitsListState } from './atoms';
 import { LOADING } from '../loading';
-import { UnitsList } from './types';
+import { Unit, UnitsList } from './types';
 
 const useUnitsListActions = () => {
   const fetchAll = useRecoilCallback(
@@ -29,7 +29,24 @@ const useUnitsListActions = () => {
     []
   );
 
-  return { fetchAll };
+  const createSimpleUnit = useRecoilCallback(
+    ({ set }) =>
+      async ({
+        name,
+        projectKey,
+      }: Pick<Unit, 'name'> & { projectKey: string }) => {
+        const { data } = await axios.post<Unit>(
+          `/v1/projects/${projectKey}/units`,
+          {
+            name,
+          }
+        );
+
+        set(unitsListState, (prevValue) => [...prevValue, data]);
+      }
+  );
+
+  return { fetchAll, createSimpleUnit };
 };
 
 export default useUnitsListActions;
