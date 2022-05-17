@@ -1,30 +1,33 @@
 import React, { FC, useCallback, useEffect, useMemo, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
 
 import useUnitsListActions from '../../atoms/unitsList/actions';
-import { useRecoilValue } from 'recoil';
+import SimpleList from '../SimpleList';
 import { unitsListState } from '../../atoms/unitsList/atoms';
-import SimpleList from '../../components/SimpleList';
-import InlineCreate from '../../components/InlineCreate/InlineCreate';
-import { GridRowStatusColorFormatter } from '../../components/Grid';
+import { GridRowStatusColorFormatter } from '../Grid';
 import { Unit } from '../../types/unit';
+import InlineCreate from '../InlineCreate/InlineCreate';
 
 import styles from './UnitsList.module.scss';
 
 const statusColorFormatter: GridRowStatusColorFormatter = (value) => {
   const { completed } = value as unknown as Unit;
 
-  console.log('COMPL', value);
-
   if (completed) {
     return '#E6E9EE';
   }
 };
 
-const UnitsList: FC = () => {
-  const { projectKey } = useParams<{ projectKey: string }>();
-  const { fetchAll, createSimpleUnit } = useUnitsListActions();
-  const unitsList = useRecoilValue(unitsListState);
+type UnitsListProps = {
+  id: string;
+  name: string;
+  predefined: boolean;
+};
+
+const UnitsList: FC<UnitsListProps> = ({ id, name, predefined = false }) => {
+  const { fetchByList, addUnitToList } = useUnitsListActions();
+  const unitsList = useRecoilValue(unitsListState(id));
   const [newItemName, setNewItemName] = useState('');
   const navigate = useNavigate();
 
@@ -39,12 +42,12 @@ const UnitsList: FC = () => {
   );
 
   const createNewItem = useCallback((value: string) => {
-    if (value && projectKey) {
+    if (value && id) {
       setNewItemName(value);
 
-      createSimpleUnit({
+      addUnitToList({
         name: value,
-        projectKey,
+        listId: id,
       }).then(() => {
         setNewItemName('');
       });
@@ -52,19 +55,17 @@ const UnitsList: FC = () => {
   }, []);
 
   const goToUnit = useCallback((id: string) => {
-    navigate(`/projects/${projectKey}/units/${id}`);
+    navigate(`units/${id}`);
   }, []);
 
   useEffect(() => {
-    if (projectKey) {
-      fetchAll(projectKey);
-    }
-  }, [fetchAll]);
+    fetchByList(id);
+  }, [id, fetchByList]);
 
   return (
     <div className={styles.wrapper}>
       <SimpleList
-        title="Units list"
+        title={predefined ? 'Units backlog' : name}
         items={formattedUnitsList}
         onItemClick={goToUnit}
         statusColorFormatter={statusColorFormatter}

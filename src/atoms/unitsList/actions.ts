@@ -22,10 +22,21 @@ const useUnitsListActions = () => {
           );
 
           set(unitsListLoadingState, LOADING.SUCCESS);
-          set(unitsListState, data);
+          set(unitsListState('default'), data);
         } catch (e) {
           set(unitsListLoadingState, LOADING.ERROR);
         }
+      },
+    []
+  );
+
+  const fetchByList = useRecoilCallback(
+    ({ set }) =>
+      async (listId: string) => {
+        const { data } = await axios.get<UnitsList>(
+          `/v1/lists/${listId}/units`
+        );
+        set(unitsListState(listId), data);
       },
     []
   );
@@ -43,11 +54,22 @@ const useUnitsListActions = () => {
           }
         );
 
-        set(unitsListState, (prevValue) => [...prevValue, data]);
+        set(unitsListState('default'), (prevValue) => [...prevValue, data]);
       }
   );
 
-  return { fetchAll, createSimpleUnit };
+  const addUnitToList = useRecoilCallback(
+    ({ set }) =>
+      async ({ name, listId }: Pick<Unit, 'name'> & { listId: string }) => {
+        const { data } = await axios.post<Unit>(`/v1/lists/${listId}/units`, {
+          name,
+        });
+
+        set(unitsListState(listId), (prevValue) => [...prevValue, data]);
+      }
+  );
+
+  return { fetchAll, fetchByList, createSimpleUnit, addUnitToList };
 };
 
 export default useUnitsListActions;

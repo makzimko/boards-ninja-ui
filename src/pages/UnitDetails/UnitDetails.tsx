@@ -67,7 +67,7 @@ const UnitDetails = () => {
     if (id) {
       remove(id).then(() => {
         // TODO: make redirect to project
-        // navigate(`/projects/${unitDetails.project}/units`)
+        navigate(`/projects/${unitDetails.project}/units`);
       });
     }
   }, [remove, unitDetails]);

@@ -11,8 +11,8 @@ import AuthWrapper from './components/AuthWrapper/AuthWrapper';
 import LoginForm from './components/LoginForm/LoginForm';
 import HomePage from './pages/Home/HomePage';
 import ProjectsList from './components/ProjectsList/ProjectsList';
-import UnitsList from './pages/UnitsList/UnitsList';
 import UnitDetails from './pages/UnitDetails/UnitDetails';
+import ProjectLists from './pages/ProjectLists/ProjectLists';
 
 const App: FC = () => {
   const { fetchUserInfo } = useAuthActions();
@@ -43,7 +43,7 @@ const App: FC = () => {
               index
               element={
                 <AuthWrapper>
-                  <UnitsList />
+                  <ProjectLists />
                 </AuthWrapper>
               }
             />

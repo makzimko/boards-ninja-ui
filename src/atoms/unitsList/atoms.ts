@@ -1,9 +1,9 @@
-import { atom } from 'recoil';
+import { atomFamily } from 'recoil';
 
 import { UnitsList } from './types';
 import { loadingState } from '../loading';
 
-export const unitsListState = atom<UnitsList>({
+export const unitsListState = atomFamily<UnitsList, string>({
   key: 'UnitsList',
   default: [],
 });
