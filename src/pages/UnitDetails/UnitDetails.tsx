@@ -52,6 +52,7 @@ const UnitDetails = () => {
       <Grid
         items={gridData}
         columns={[{ field: 'name' }, { field: 'value' }]}
+        onCellClick={console.log.bind('CLICK')}
       />
     </div>
   );
