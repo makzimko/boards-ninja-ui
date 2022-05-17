@@ -7,20 +7,12 @@ import useProjectsListActions, {
   projectsListState,
 } from '../../atoms/projectsList';
 import { LOADING } from '../../atoms/loading';
-import { Grid, GridColumn, GridRowCellClickHandler } from '../Grid';
 import SimpleList, {
   SimpleListItem,
   SimpleListItemClickHandler,
 } from '../SimpleList';
 
 import styles from './ProjectsList.module.scss';
-
-const PROJECTS_LIST_GRID_COLUMNS: GridColumn[] = [
-  {
-    field: 'name',
-    clickable: true,
-  },
-];
 
 const ProjectsList: FC = () => {
   const { fetchAll } = useProjectsListActions();

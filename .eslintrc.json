@@ -25,5 +25,10 @@
     "rules": {
         "prettier/prettier": "warn"
     },
-    "overrides": []
+    "overrides": [],
+    "settings": {
+        "react": {
+            "version": "detect"
+        }
+    }
 }

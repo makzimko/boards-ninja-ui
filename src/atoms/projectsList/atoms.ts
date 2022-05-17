@@ -1,4 +1,4 @@
-import { atom, selector } from 'recoil';
+import { atom } from 'recoil';
 
 import { ProjectsList } from './types';
 import { loadingState } from '../loading';

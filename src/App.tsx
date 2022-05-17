@@ -1,11 +1,5 @@
 import React, { FC, useEffect } from 'react';
-import {
-  BrowserRouter as Router,
-  Link,
-  Outlet,
-  Route,
-  Routes,
-} from 'react-router-dom';
+import { BrowserRouter as Router, Link, Route, Routes } from 'react-router-dom';
 
 import './utils/request';
 import './App.css';
@@ -17,8 +11,8 @@ import AuthWrapper from './components/AuthWrapper/AuthWrapper';
 import LoginForm from './components/LoginForm/LoginForm';
 import HomePage from './pages/Home/HomePage';
 import ProjectsList from './components/ProjectsList/ProjectsList';
-import UnitsList from "./pages/UnitsList/UnitsList";
-import UnitDetails from "./pages/UnitDetails/UnitDetails";
+import UnitsList from './pages/UnitsList/UnitsList';
+import UnitDetails from './pages/UnitDetails/UnitDetails';
 
 const App: FC = () => {
   const { fetchUserInfo } = useAuthActions();
@@ -44,17 +38,24 @@ const App: FC = () => {
               </AuthWrapper>
             }
           />
-            <Route path=":projectKey">
-                <Route index element={<AuthWrapper><UnitsList /></AuthWrapper>} />
-                <Route
-                    path="units/:id"
-                    element={
-                        <AuthWrapper>
-                            <UnitDetails />
-                        </AuthWrapper>
-                    }
-                />
-            </Route>
+          <Route path=":projectKey">
+            <Route
+              index
+              element={
+                <AuthWrapper>
+                  <UnitsList />
+                </AuthWrapper>
+              }
+            />
+            <Route
+              path="units/:id"
+              element={
+                <AuthWrapper>
+                  <UnitDetails />
+                </AuthWrapper>
+              }
+            />
+          </Route>
         </Route>
         <Route
           path="login"
