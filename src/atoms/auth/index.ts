@@ -1,4 +1,4 @@
-import useAuthActions from "./actions";
+import useAuthActions from './actions';
 
 export * from './atoms';
 

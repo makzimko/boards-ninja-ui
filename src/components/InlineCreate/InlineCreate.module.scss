@@ -1,0 +1,49 @@
+.wrapper {
+  display: flex;
+  gap: 2px;
+  border-right: 8px solid #D0D4E4;
+  padding-right: 2px;
+
+  .left-gutter {
+    width: 8px;
+    background: #E6E9EE;
+    order: -1;
+  }
+
+  .submit {
+    display: none;
+    border: none;
+    margin: 0;
+    border-radius: 0;
+    background: #C4C4C4;
+    color: white;
+    cursor: pointer;
+    padding: 8px 16px;
+    -webkit-appearance: none;
+  }
+
+  .input {
+    flex: 1;
+    padding: 7px;
+    border: 1px solid #E6E9EE;
+    border-radius: 0;
+    line-height: 20px;
+    margin: 0;
+    outline: none;
+    font-size: 16px;
+
+    &:focus, &:not([value='']) {
+      border-color: #C4C4C4;
+
+      &~.left-gutter {
+        background: #C4C4C4;
+      }
+
+      &~.submit {
+        display: block;
+      }
+    }
+  }
+
+
+}

@@ -1,4 +1,4 @@
-import useProjectsListActions from "./actions";
+import useProjectsListActions from './actions';
 
 export * from './atoms';
 

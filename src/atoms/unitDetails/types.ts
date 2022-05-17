@@ -1,3 +1,3 @@
 import { Unit } from '../../types/unit';
 
-export type UnitsList = Unit[];
+export type UnitDetails = Unit;

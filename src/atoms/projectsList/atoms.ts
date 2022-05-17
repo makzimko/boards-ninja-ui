@@ -1,11 +1,11 @@
-import {atom} from "recoil";
-import {Project} from "./types";
-import loadingState from "../loading/loading";
+import { atom, selector } from 'recoil';
 
-export const projectsListState = atom<Project[]>({
-    key: 'ProjectsList',
-    default: []
-});
+import { ProjectsList } from './types';
+import { loadingState } from '../loading';
 
 export const projectsListLoadingState = loadingState('ProjectsListLoading');
 
+export const projectsListState = atom<ProjectsList>({
+  key: 'ProjectsList',
+  default: [],
+});

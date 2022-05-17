@@ -1,43 +1,53 @@
-import {useRecoilCallback} from "recoil";
-import axios from "axios";
+import axios from 'axios';
+import { useRecoilCallback } from 'recoil';
+import { unitsListLoadingState, unitsListState } from './atoms';
+import { LOADING } from '../loading';
+import { UnitsList } from './types';
+import { Unit } from '../../types/unit';
 
-import {UnitsListActions, UnitsListData} from "./types";
-import {
-    UnitListCountState,
-    UnitsListHasMoreState,
-    UnitsListItemsState,
-    UnitsListLoadingState,
-    UnitsListTotalCountState
-} from "./atoms";
-import {LOADING} from "../loading/loading";
-
-const useUnitsListActions = (projectKey: string): UnitsListActions => {
-    const loadMore = useRecoilCallback(({ set, snapshot }) => async () => {
-        const hasMore = snapshot.getLoadable(UnitsListHasMoreState).getValue();
-        if (!hasMore) {
-            return;
-        }
-
-        set(UnitsListLoadingState, LOADING.PENDING);
+const useUnitsListActions = () => {
+  const fetchAll = useRecoilCallback(
+    ({ set }) =>
+      async (projectKey: string) => {
+        set(unitsListLoadingState, LOADING.PENDING);
 
         try {
-            const { data, headers } = await axios.get<UnitsListData['items']>(`/v1/projects/${projectKey}/units`, {
-                params: {
-                    offset: snapshot.getLoadable(UnitListCountState).getValue()
-                }
-            });
+          const { data } = await axios.get<UnitsList>(
+            `/v1/projects/${projectKey}/units`,
+            {
+              params: {
+                limit: 9999,
+              },
+            }
+          );
 
-            set(UnitsListLoadingState, LOADING.SUCCESS)
-            set(UnitsListItemsState, (prevDate) => [...prevDate, ...data]);
-            set(UnitsListTotalCountState, +headers['x-total-count']);
+          set(unitsListLoadingState, LOADING.SUCCESS);
+          set(unitsListState, data);
         } catch (e) {
-            set(UnitsListLoadingState, LOADING.ERROR);
+          set(unitsListLoadingState, LOADING.ERROR);
         }
-    });
+      },
+    []
+  );
 
-    return {
-        loadMore
-    }
+  const createSimpleUnit = useRecoilCallback(
+    ({ set }) =>
+      async ({
+        name,
+        projectKey,
+      }: Pick<Unit, 'name'> & { projectKey: string }) => {
+        const { data } = await axios.post<Unit>(
+          `/v1/projects/${projectKey}/units`,
+          {
+            name,
+          }
+        );
+
+        set(unitsListState, (prevValue) => [...prevValue, data]);
+      }
+  );
+
+  return { fetchAll, createSimpleUnit };
 };
 
 export default useUnitsListActions;

@@ -1,4 +1,4 @@
 export type UserInfo = {
-    _id: string;
-    name: string;
-}
+  _id: string;
+  login: string;
+};
