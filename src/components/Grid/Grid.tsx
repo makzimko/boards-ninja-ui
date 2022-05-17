@@ -1,5 +1,8 @@
 import React, { FC, useMemo } from 'react';
+
 import GridRow from './GridRow/GridRow';
+
+import styles from './Grid.module.scss';
 
 type GridProps = {
   items: {
@@ -22,12 +25,12 @@ const Grid: FC<GridProps> = ({ items, columns }) => {
   );
 
   return (
-    <div>
-      <ul>
+    <div className={styles.wrapper}>
+      <div className={styles['rows-container']}>
         {rows.map(({ id, items }) => (
           <GridRow key={id} items={items} />
         ))}
-      </ul>
+      </div>
     </div>
   );
 };

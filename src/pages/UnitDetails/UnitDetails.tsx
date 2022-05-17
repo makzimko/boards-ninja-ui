@@ -7,6 +7,8 @@ import { LOADING } from '../../atoms/loading';
 import { unitDetailsState } from '../../atoms/unitDetails/atoms';
 import Grid from '../../components/Grid/Grid';
 
+import styles from './UnitDetails.module.scss';
+
 const UNIT_DETAILS_FIELD = ['_id', 'name', 'project', 'completed'];
 
 const UnitDetails = () => {
@@ -46,9 +48,7 @@ const UnitDetails = () => {
   }
 
   return (
-    <div>
-      unit details {id} {JSON.stringify(unitDetails)}
-      <br />
+    <div className={styles.wrapper}>
       <Grid
         items={gridData}
         columns={[{ field: 'name' }, { field: 'value' }]}

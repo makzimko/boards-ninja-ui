@@ -1,5 +1,7 @@
 import React, { FC } from 'react';
 
+import styles from './GridRow.module.scss';
+
 type GridRowProps = {
   items: {
     field: string;
@@ -9,11 +11,14 @@ type GridRowProps = {
 
 const GridRow: FC<GridRowProps> = ({ items }) => {
   return (
-    <li>
+    <div className={styles.wrapper}>
+      <div className={styles.status} />
       {items.map(({ field, value }) => (
-        <span key={field}>{value as string}</span>
+        <div className={styles.cell} key={field}>
+          {value as string}
+        </div>
       ))}
-    </li>
+    </div>
   );
 };
 
