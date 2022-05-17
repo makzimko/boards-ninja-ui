@@ -1,5 +1,5 @@
 import React, { FC, useCallback, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import useUnitsListActions from '../../atoms/unitsList/actions';
 import { useRecoilValue } from 'recoil';
@@ -14,6 +14,7 @@ const UnitsList: FC = () => {
   const { fetchAll, createSimpleUnit } = useUnitsListActions();
   const items = useRecoilValue(unitsListState);
   const [newItemName, setNewItemName] = useState('');
+  const navigate = useNavigate();
 
   const createNewItem = useCallback((value: string) => {
     if (value && projectKey) {
@@ -28,6 +29,10 @@ const UnitsList: FC = () => {
     }
   }, []);
 
+  const goToUnit = useCallback((id: string) => {
+    navigate(`/projects/${projectKey}/units/${id}`);
+  }, []);
+
   useEffect(() => {
     if (projectKey) {
       fetchAll(projectKey);
@@ -36,7 +41,7 @@ const UnitsList: FC = () => {
 
   return (
     <div className={styles.wrapper}>
-      <SimpleList title="Units list" items={items} />
+      <SimpleList title="Units list" items={items} onItemClick={goToUnit} />
       <InlineCreate
         containerClassName={styles['add-item']}
         onSubmit={createNewItem}

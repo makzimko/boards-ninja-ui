@@ -2,7 +2,8 @@ import axios from 'axios';
 import { useRecoilCallback } from 'recoil';
 import { unitsListLoadingState, unitsListState } from './atoms';
 import { LOADING } from '../loading';
-import { Unit, UnitsList } from './types';
+import { UnitsList } from './types';
+import { Unit } from '../../types/unit';
 
 const useUnitsListActions = () => {
   const fetchAll = useRecoilCallback(

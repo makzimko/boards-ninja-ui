@@ -12,12 +12,13 @@ import './App.css';
 
 import useAuthActions, { authLoadingState } from './atoms/auth';
 import { useRecoilValue } from 'recoil';
-import { LOADING } from './atoms/loading/types';
+import { LOADING } from './atoms/loading';
 import AuthWrapper from './components/AuthWrapper/AuthWrapper';
 import LoginForm from './components/LoginForm/LoginForm';
 import HomePage from './pages/Home/HomePage';
 import ProjectsList from './components/ProjectsList/ProjectsList';
 import UnitsList from "./pages/UnitsList/UnitsList";
+import UnitDetails from "./pages/UnitDetails/UnitDetails";
 
 const App: FC = () => {
   const { fetchUserInfo } = useAuthActions();
@@ -51,16 +52,18 @@ const App: FC = () => {
               </AuthWrapper>
             }
           />
-          <Route path=":projectKey" element={<UnitsList />} />
+            <Route path=":projectKey">
+                <Route index element={<AuthWrapper><UnitsList /></AuthWrapper>} />
+                <Route
+                    path="units/:id"
+                    element={
+                        <AuthWrapper>
+                            <UnitDetails />
+                        </AuthWrapper>
+                    }
+                />
+            </Route>
         </Route>
-        <Route
-          path="units"
-          element={
-            <AuthWrapper>
-              <>units</>
-            </AuthWrapper>
-          }
-        />
         <Route
           path="login"
           element={
