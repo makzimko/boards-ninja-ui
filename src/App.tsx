@@ -35,15 +35,7 @@ const App: FC = () => {
         <Link to="/projects">Project</Link>
       </nav>
       <Routes>
-        <Route
-          path="projects"
-          element={
-            <div>
-              projects root
-              <Outlet />
-            </div>
-          }
-        >
+        <Route path="projects">
           <Route
             index
             element={
