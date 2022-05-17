@@ -1,6 +1,7 @@
-import React, { FC, useCallback, useMemo } from 'react';
+import React, { FC, useMemo } from 'react';
 
-import GridRow, { GridRowCellClickHandler } from './GridRow/GridRow';
+import { GridColumn, GridRowCellClickHandler, RowItem } from './types';
+import GridRow from './GridRow/GridRow';
 
 import styles from './Grid.module.scss';
 
@@ -9,9 +10,7 @@ type GridProps = {
     id: string;
     [key: string]: unknown;
   }[];
-  columns: {
-    field: string;
-  }[];
+  columns: GridColumn[];
   onCellClick?: GridRowCellClickHandler;
 };
 
@@ -20,7 +19,11 @@ const Grid: FC<GridProps> = ({ items, columns, onCellClick }) => {
     () =>
       items.map((item) => ({
         id: item.id,
-        items: columns.map(({ field }) => ({ field, value: item[field] })),
+        items: columns.map<RowItem>(({ field, ...rest }) => ({
+          field,
+          value: item[field],
+          ...rest,
+        })),
       })),
     [items, columns]
   );

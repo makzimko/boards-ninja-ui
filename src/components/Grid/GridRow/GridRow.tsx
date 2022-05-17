@@ -1,18 +1,12 @@
 import React, { FC, MouseEventHandler, useCallback } from 'react';
+import classNames from 'classnames';
 
 import styles from './GridRow.module.scss';
-
-export type GridRowCellClickHandler = (options: {
-  id: string;
-  field: string;
-}) => void;
+import { GridRowCellClickHandler, RowItem } from '../types';
 
 type GridRowProps = {
   id: string;
-  items: {
-    field: string;
-    value: unknown;
-  }[];
+  items: RowItem[];
   onCellClick?: GridRowCellClickHandler;
 };
 
@@ -30,12 +24,14 @@ const GridRow: FC<GridRowProps> = ({ id, items, onCellClick }) => {
   return (
     <div className={styles.wrapper}>
       <div className={styles.status} />
-      {items.map(({ field, value }) => (
+      {items.map(({ field, value, clickable }) => (
         <div
-          className={styles.cell}
+          className={classNames(styles.cell, {
+            [styles.clickable]: clickable,
+          })}
           key={field}
           data-field={field}
-          onClick={handleCellClick}
+          onClick={clickable ? handleCellClick : undefined}
         >
           {value as string}
         </div>

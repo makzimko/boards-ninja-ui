@@ -17,5 +17,15 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+
+    &.clickable {
+      cursor: pointer;
+    }
+  }
+
+  &:hover {
+    .cell {
+      background-color: #E6E9EE;
+    }
   }
 }
