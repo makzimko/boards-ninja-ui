@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useRecoilValue } from 'recoil';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import useUnitDetailsActions from '../../atoms/unitDetails/actions';
 import { LOADING } from '../../atoms/loading';
@@ -30,9 +30,10 @@ const UNIT_DETAILS_GRID_COLUMNS: GridColumn[] = [
 
 const UnitDetails = () => {
   const { id } = useParams();
-  const { fetch, update } = useUnitDetailsActions();
+  const { fetch, update, remove } = useUnitDetailsActions();
   const [fetchStatus, setFetchStatus] = useState(LOADING.INITIAL);
   const unitDetails = useRecoilValue(unitDetailsState);
+  const navigate = useNavigate();
 
   const gridData = useMemo<GridItem[]>(() => {
     if (!unitDetails) {
@@ -62,6 +63,15 @@ const UnitDetails = () => {
     }
   }, [update, unitDetails]);
 
+  const handleRemove = useCallback(() => {
+    if (id) {
+      remove(id).then(() => {
+        // TODO: make redirect to project
+        // navigate(`/projects/${unitDetails.project}/units`)
+      });
+    }
+  }, [remove, unitDetails]);
+
   if ([LOADING.INITIAL, LOADING.PENDING].includes(fetchStatus)) {
     return <div>loading</div>;
   }
@@ -75,6 +85,7 @@ const UnitDetails = () => {
       <button onClick={changeCompleteness}>
         Set as {unitDetails.completed ? 'incomplete' : 'completed'}
       </button>
+      <button onClick={handleRemove}>Remove</button>
       <br />
       <br />
       <Grid

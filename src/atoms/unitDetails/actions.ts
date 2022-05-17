@@ -28,7 +28,11 @@ const useUnitDetailsActions = () => {
     []
   );
 
-  return { fetch, update };
+  const remove = useRecoilCallback(() => async (id) => {
+    await axios.delete(`/v1/units/${id}`);
+  });
+
+  return { fetch, update, remove };
 };
 
 export default useUnitDetailsActions;
