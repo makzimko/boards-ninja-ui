@@ -17,7 +17,7 @@ const statusColorFormatter: GridRowStatusColorFormatter = (value) => {
   console.log('COMPL', value);
 
   if (completed) {
-    return '#579BFC';
+    return '#E6E9EE';
   }
 };
 
