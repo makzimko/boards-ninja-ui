@@ -7,7 +7,11 @@ import useProjectsListActions, {
   projectsListState,
 } from '../../atoms/projectsList';
 import { LOADING } from '../../atoms/loading';
-import { Grid, GridColumn, GridItem, GridRowCellClickHandler } from '../Grid';
+import { Grid, GridColumn, GridRowCellClickHandler } from '../Grid';
+import SimpleList, {
+  SimpleListItem,
+  SimpleListItemClickHandler,
+} from '../SimpleList';
 
 import styles from './ProjectsList.module.scss';
 
@@ -31,11 +35,12 @@ const ProjectsList: FC = () => {
   }, [projectsListLoading]);
 
   const formattedProjectList2 = useMemo(
-    () => projectsList.map<GridItem>(({ key, name }) => ({ id: key, name })),
+    () =>
+      projectsList.map<SimpleListItem>(({ key, name }) => ({ id: key, name })),
     [projectsList]
   );
 
-  const goToProject = useCallback<GridRowCellClickHandler>(({ id }) => {
+  const goToProject = useCallback<SimpleListItemClickHandler>((id) => {
     navigate(`/projects/${id}`);
   }, []);
 
@@ -54,10 +59,10 @@ const ProjectsList: FC = () => {
   }
   return (
     <div className={styles.wrapper}>
-      <Grid
+      <SimpleList
+        title="Projects list"
         items={formattedProjectList2}
-        columns={PROJECTS_LIST_GRID_COLUMNS}
-        onCellClick={goToProject}
+        onItemClick={goToProject}
       />
     </div>
   );

@@ -7,7 +7,7 @@ import { LOADING } from '../../atoms/loading';
 import { unitDetailsState } from '../../atoms/unitDetails/atoms';
 
 import styles from './UnitDetails.module.scss';
-import { Grid, GridItem } from '../../components/Grid';
+import Grid, { GridItem } from '../../components/Grid';
 
 const UNIT_DETAILS_FIELD = ['_id', 'name', 'project', 'completed'];
 
