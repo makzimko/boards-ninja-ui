@@ -1,15 +1,31 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
+import { useRecoilValue } from 'recoil';
 import { useParams } from 'react-router-dom';
+
 import useUnitDetailsActions from '../../atoms/unitDetails/actions';
 import { LOADING } from '../../atoms/loading';
-import { useRecoilValue } from 'recoil';
 import { unitDetailsState } from '../../atoms/unitDetails/atoms';
+import Grid from '../../components/Grid/Grid';
+
+const UNIT_DETAILS_FIELD = ['_id', 'name', 'project', 'completed'];
 
 const UnitDetails = () => {
   const { id } = useParams();
   const { fetch } = useUnitDetailsActions();
   const [fetchStatus, setFetchStatus] = useState(LOADING.INITIAL);
   const unitDetails = useRecoilValue(unitDetailsState);
+
+  const gridData = useMemo(() => {
+    if (!unitDetails) {
+      return [];
+    }
+
+    return UNIT_DETAILS_FIELD.map((fieldName) => ({
+      id: fieldName,
+      name: fieldName,
+      value: unitDetails[fieldName as keyof typeof unitDetails],
+    }));
+  }, [unitDetails]);
 
   useEffect(() => {
     setFetchStatus(LOADING.PENDING);
@@ -32,6 +48,11 @@ const UnitDetails = () => {
   return (
     <div>
       unit details {id} {JSON.stringify(unitDetails)}
+      <br />
+      <Grid
+        items={gridData}
+        columns={[{ field: 'name' }, { field: 'value' }]}
+      />
     </div>
   );
 };
