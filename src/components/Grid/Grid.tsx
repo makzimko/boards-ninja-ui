@@ -1,6 +1,7 @@
 import React, { FC, useMemo } from 'react';
 
 import {
+  ColumnFormatter,
   GridColumn,
   GridItem,
   GridRowCellClickHandler,
@@ -16,16 +17,20 @@ type GridProps = {
   onCellClick?: GridRowCellClickHandler;
 };
 
+const defaultFormatter: ColumnFormatter = (_, value: unknown) => value;
+
 const Grid: FC<GridProps> = ({ items, columns, onCellClick }) => {
   const rows = useMemo(
     () =>
       items.map((item) => ({
         id: item.id,
-        items: columns.map<RowItem>(({ field, ...rest }) => ({
-          field,
-          value: item[field],
-          ...rest,
-        })),
+        items: columns.map<RowItem>(
+          ({ field, formatter = defaultFormatter, ...rest }) => ({
+            field,
+            value: formatter({ id: item.id, name: field }, item[field]),
+            ...rest,
+          })
+        ),
       })),
     [items, columns]
   );

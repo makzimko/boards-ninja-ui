@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { useParams } from 'react-router-dom';
 
@@ -7,13 +7,26 @@ import { LOADING } from '../../atoms/loading';
 import { unitDetailsState } from '../../atoms/unitDetails/atoms';
 
 import styles from './UnitDetails.module.scss';
-import Grid, { GridItem } from '../../components/Grid';
+import Grid, { GridColumn, GridItem } from '../../components/Grid';
 
 const UNIT_DETAILS_FIELD = ['_id', 'name', 'project', 'completed'];
+const UNIT_DETAILS_GRID_COLUMNS: GridColumn[] = [
+  { field: 'name', clickable: true },
+  {
+    field: 'value',
+    formatter: ({ id }, value) => {
+      if (id === 'completed') {
+        return (value as boolean).toString();
+      }
+
+      return value;
+    },
+  },
+];
 
 const UnitDetails = () => {
   const { id } = useParams();
-  const { fetch } = useUnitDetailsActions();
+  const { fetch, update } = useUnitDetailsActions();
   const [fetchStatus, setFetchStatus] = useState(LOADING.INITIAL);
   const unitDetails = useRecoilValue(unitDetailsState);
 
@@ -39,7 +52,13 @@ const UnitDetails = () => {
     }
   }, [id, fetch]);
 
-  if (fetchStatus === LOADING.PENDING) {
+  const changeCompleteness = useCallback(() => {
+    if (id && unitDetails) {
+      update(id, { completed: !unitDetails.completed });
+    }
+  }, [update, unitDetails]);
+
+  if ([LOADING.INITIAL, LOADING.PENDING].includes(fetchStatus)) {
     return <div>loading</div>;
   }
 
@@ -49,9 +68,14 @@ const UnitDetails = () => {
 
   return (
     <div className={styles.wrapper}>
+      <button onClick={changeCompleteness}>
+        Set as {unitDetails.completed ? 'incomplete' : 'completed'}
+      </button>
+      <br />
+      <br />
       <Grid
         items={gridData}
-        columns={[{ field: 'name', clickable: true }, { field: 'value' }]}
+        columns={UNIT_DETAILS_GRID_COLUMNS}
         onCellClick={console.log.bind('CLICK')}
       />
     </div>

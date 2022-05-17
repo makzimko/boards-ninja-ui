@@ -15,7 +15,20 @@ const useUnitDetailsActions = () => {
     []
   );
 
-  return { fetch };
+  const update = useRecoilCallback(
+    ({ set }) =>
+      async (id: string, props: Partial<UnitDetails>) => {
+        const { data } = await axios.patch<UnitDetails>(
+          `/v1/units/${id}`,
+          props
+        );
+
+        set(unitDetailsState, data);
+      },
+    []
+  );
+
+  return { fetch, update };
 };
 
 export default useUnitDetailsActions;
