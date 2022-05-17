@@ -7,8 +7,7 @@ import useProjectsListActions, {
   projectsListState,
 } from '../../atoms/projectsList';
 import { LOADING } from '../../atoms/loading';
-import { GridColumn, GridItem, GridRowCellClickHandler } from '../Grid/types';
-import Grid from '../Grid/Grid';
+import { Grid, GridColumn, GridItem, GridRowCellClickHandler } from '../Grid';
 
 import styles from './ProjectsList.module.scss';
 

@@ -5,9 +5,9 @@ import { useParams } from 'react-router-dom';
 import useUnitDetailsActions from '../../atoms/unitDetails/actions';
 import { LOADING } from '../../atoms/loading';
 import { unitDetailsState } from '../../atoms/unitDetails/atoms';
-import Grid from '../../components/Grid/Grid';
 
 import styles from './UnitDetails.module.scss';
+import { Grid, GridItem } from '../../components/Grid';
 
 const UNIT_DETAILS_FIELD = ['_id', 'name', 'project', 'completed'];
 
@@ -17,7 +17,7 @@ const UnitDetails = () => {
   const [fetchStatus, setFetchStatus] = useState(LOADING.INITIAL);
   const unitDetails = useRecoilValue(unitDetailsState);
 
-  const gridData = useMemo(() => {
+  const gridData = useMemo<GridItem[]>(() => {
     if (!unitDetails) {
       return [];
     }
