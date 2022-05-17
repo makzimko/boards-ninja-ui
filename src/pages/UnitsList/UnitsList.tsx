@@ -6,8 +6,20 @@ import { useRecoilValue } from 'recoil';
 import { unitsListState } from '../../atoms/unitsList/atoms';
 import SimpleList from '../../components/SimpleList';
 import InlineCreate from '../../components/InlineCreate/InlineCreate';
+import { GridRowStatusColorFormatter } from '../../components/Grid';
+import { Unit } from '../../types/unit';
 
 import styles from './UnitsList.module.scss';
+
+const statusColorFormatter: GridRowStatusColorFormatter = (value) => {
+  const { completed } = value as unknown as Unit;
+
+  console.log('COMPL', value);
+
+  if (completed) {
+    return '#579BFC';
+  }
+};
 
 const UnitsList: FC = () => {
   const { projectKey } = useParams<{ projectKey: string }>();
@@ -18,9 +30,10 @@ const UnitsList: FC = () => {
 
   const formattedUnitsList = useMemo(
     () =>
-      unitsList.map(({ _id, name }) => ({
+      unitsList.map(({ _id, name, completed }) => ({
         id: _id,
         name,
+        completed,
       })),
     [unitsList]
   );
@@ -54,6 +67,7 @@ const UnitsList: FC = () => {
         title="Units list"
         items={formattedUnitsList}
         onItemClick={goToUnit}
+        statusColorFormatter={statusColorFormatter}
       />
       <InlineCreate
         containerClassName={styles['add-item']}

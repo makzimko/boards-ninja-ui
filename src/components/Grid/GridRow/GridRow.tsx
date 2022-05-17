@@ -9,9 +9,10 @@ type GridRowProps = {
   id: string;
   items: RowItem[];
   onCellClick?: GridRowCellClickHandler;
+  statusColor?: string;
 };
 
-const GridRow: FC<GridRowProps> = ({ id, items, onCellClick }) => {
+const GridRow: FC<GridRowProps> = ({ id, items, onCellClick, statusColor }) => {
   const handleCellClick = useCallback<MouseEventHandler<HTMLDivElement>>(
     ({ currentTarget }) => {
       const { field } = currentTarget.dataset;
@@ -24,7 +25,7 @@ const GridRow: FC<GridRowProps> = ({ id, items, onCellClick }) => {
   );
   return (
     <div className={styles.wrapper}>
-      <div className={styles.status} />
+      <div className={styles.status} style={{ backgroundColor: statusColor }} />
       {items.map(({ field, value, clickable }) => (
         <div
           className={classNames(styles.cell, {

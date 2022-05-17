@@ -8,7 +8,7 @@ export type GridItem = {
   [key: string]: unknown;
 };
 
-export type ColumnFormatter = (
+export type GridColumnFormatter = (
   field: { id: string; name: string },
   value: unknown
 ) => unknown;
@@ -16,9 +16,13 @@ export type ColumnFormatter = (
 export type GridColumn = {
   field: string;
   clickable?: boolean;
-  formatter?: ColumnFormatter;
+  formatter?: GridColumnFormatter;
 };
 
 export type RowItem = {
   value: unknown;
 } & Pick<GridColumn, 'field' | 'clickable' | 'formatter'>;
+
+export type GridRowStatusColorFormatter = (
+  item: GridItem
+) => string | undefined;

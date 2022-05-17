@@ -1,10 +1,11 @@
 import React, { FC, useMemo } from 'react';
 
 import {
-  ColumnFormatter,
   GridColumn,
+  GridColumnFormatter,
   GridItem,
   GridRowCellClickHandler,
+  GridRowStatusColorFormatter,
   RowItem,
 } from './types';
 import GridRow from './GridRow/GridRow';
@@ -15,11 +16,17 @@ type GridProps = {
   items: GridItem[];
   columns: GridColumn[];
   onCellClick?: GridRowCellClickHandler;
+  statusColorFormatter?: GridRowStatusColorFormatter;
 };
 
-const defaultFormatter: ColumnFormatter = (_, value: unknown) => value;
+const defaultFormatter: GridColumnFormatter = (_, value: unknown) => value;
 
-const Grid: FC<GridProps> = ({ items, columns, onCellClick }) => {
+const Grid: FC<GridProps> = ({
+  items,
+  columns,
+  onCellClick,
+  statusColorFormatter = () => undefined,
+}) => {
   const rows = useMemo(
     () =>
       items.map((item) => ({
@@ -31,6 +38,7 @@ const Grid: FC<GridProps> = ({ items, columns, onCellClick }) => {
             ...rest,
           })
         ),
+        statusColor: statusColorFormatter(item),
       })),
     [items, columns]
   );
@@ -38,8 +46,14 @@ const Grid: FC<GridProps> = ({ items, columns, onCellClick }) => {
   return (
     <div className={styles.wrapper}>
       <div className={styles['rows-container']}>
-        {rows.map(({ id, items }) => (
-          <GridRow key={id} id={id} items={items} onCellClick={onCellClick} />
+        {rows.map(({ id, items, statusColor }) => (
+          <GridRow
+            key={id}
+            id={id}
+            items={items}
+            onCellClick={onCellClick}
+            statusColor={statusColor}
+          />
         ))}
       </div>
     </div>

@@ -7,20 +7,24 @@ import { LOADING } from '../../atoms/loading';
 import { unitDetailsState } from '../../atoms/unitDetails/atoms';
 
 import styles from './UnitDetails.module.scss';
-import Grid, { GridColumn, GridItem } from '../../components/Grid';
+import Grid, {
+  GridColumn,
+  GridColumnFormatter,
+  GridItem,
+} from '../../components/Grid';
 
 const UNIT_DETAILS_FIELD = ['_id', 'name', 'project', 'completed'];
+const valueFormatter: GridColumnFormatter = ({ id }, value) => {
+  if (id === 'completed') {
+    return (value as boolean).toString();
+  }
+  return value;
+};
 const UNIT_DETAILS_GRID_COLUMNS: GridColumn[] = [
   { field: 'name', clickable: true },
   {
     field: 'value',
-    formatter: ({ id }, value) => {
-      if (id === 'completed') {
-        return (value as boolean).toString();
-      }
-
-      return value;
-    },
+    formatter: valueFormatter,
   },
 ];
 
