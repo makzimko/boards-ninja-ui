@@ -7,9 +7,17 @@ import useProjectsListActions, {
   projectsListState,
 } from '../../atoms/projectsList';
 import { LOADING } from '../../atoms/loading';
-import SimpleList from '../SimpleList/SimpleList';
+import { GridColumn, GridItem, GridRowCellClickHandler } from '../Grid/types';
+import Grid from '../Grid/Grid';
 
 import styles from './ProjectsList.module.scss';
+
+const PROJECTS_LIST_GRID_COLUMNS: GridColumn[] = [
+  {
+    field: 'name',
+    clickable: true,
+  },
+];
 
 const ProjectsList: FC = () => {
   const { fetchAll } = useProjectsListActions();
@@ -17,19 +25,19 @@ const ProjectsList: FC = () => {
   const projectsListLoading = useRecoilValue(projectsListLoadingState);
   const navigate = useNavigate();
 
-  const formattedProjectList = useMemo(
-    () => projectsList.map(({ key, name }) => ({ _id: key, name })),
-    [projectsList]
-  );
-
   useEffect(() => {
     if (projectsListLoading === LOADING.INITIAL) {
       fetchAll();
     }
   }, [projectsListLoading]);
 
-  const goToProject = useCallback((projectKey: string) => {
-    navigate(`/projects/${projectKey}`);
+  const formattedProjectList2 = useMemo(
+    () => projectsList.map<GridItem>(({ key, name }) => ({ id: key, name })),
+    [projectsList]
+  );
+
+  const goToProject = useCallback<GridRowCellClickHandler>(({ id }) => {
+    navigate(`/projects/${id}`);
   }, []);
 
   if ([LOADING.INITIAL, LOADING.PENDING].includes(projectsListLoading)) {
@@ -47,10 +55,10 @@ const ProjectsList: FC = () => {
   }
   return (
     <div className={styles.wrapper}>
-      <SimpleList
-        title="Projects"
-        items={formattedProjectList}
-        onItemClick={goToProject}
+      <Grid
+        items={formattedProjectList2}
+        columns={PROJECTS_LIST_GRID_COLUMNS}
+        onCellClick={goToProject}
       />
     </div>
   );

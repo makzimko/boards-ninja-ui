@@ -3,6 +3,11 @@ export type GridRowCellClickHandler = (options: {
   field: string;
 }) => void;
 
+export type GridItem = {
+  id: string;
+  [key: string]: unknown;
+};
+
 export type GridColumn = {
   field: string;
   clickable?: boolean;

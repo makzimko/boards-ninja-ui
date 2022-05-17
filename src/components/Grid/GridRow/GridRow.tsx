@@ -1,8 +1,9 @@
 import React, { FC, MouseEventHandler, useCallback } from 'react';
 import classNames from 'classnames';
 
-import styles from './GridRow.module.scss';
 import { GridRowCellClickHandler, RowItem } from '../types';
+
+import styles from './GridRow.module.scss';
 
 type GridRowProps = {
   id: string;
@@ -27,7 +28,7 @@ const GridRow: FC<GridRowProps> = ({ id, items, onCellClick }) => {
       {items.map(({ field, value, clickable }) => (
         <div
           className={classNames(styles.cell, {
-            [styles.clickable]: clickable,
+            [styles.clickable]: onCellClick && clickable,
           })}
           key={field}
           data-field={field}

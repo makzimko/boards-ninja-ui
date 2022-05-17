@@ -1,15 +1,17 @@
 import React, { FC, useMemo } from 'react';
 
-import { GridColumn, GridRowCellClickHandler, RowItem } from './types';
+import {
+  GridColumn,
+  GridItem,
+  GridRowCellClickHandler,
+  RowItem,
+} from './types';
 import GridRow from './GridRow/GridRow';
 
 import styles from './Grid.module.scss';
 
 type GridProps = {
-  items: {
-    id: string;
-    [key: string]: unknown;
-  }[];
+  items: GridItem[];
   columns: GridColumn[];
   onCellClick?: GridRowCellClickHandler;
 };
