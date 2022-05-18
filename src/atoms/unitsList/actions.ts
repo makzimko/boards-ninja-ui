@@ -55,7 +55,8 @@ const useUnitsListActions = () => {
         );
 
         set(unitsListState('default'), (prevValue) => [...prevValue, data]);
-      }
+      },
+    []
   );
 
   const addUnitToList = useRecoilCallback(
@@ -66,7 +67,8 @@ const useUnitsListActions = () => {
         });
 
         set(unitsListState(listId), (prevValue) => [...prevValue, data]);
-      }
+      },
+    []
   );
 
   return { fetchAll, fetchByList, createSimpleUnit, addUnitToList };

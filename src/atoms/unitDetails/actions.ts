@@ -3,6 +3,7 @@ import axios from 'axios';
 
 import { unitDetailsState } from './atoms';
 import { UnitDetails } from './types';
+import { unitsListState } from '../unitsList/atoms';
 
 const useUnitDetailsActions = () => {
   const fetch = useRecoilCallback(
@@ -28,11 +29,27 @@ const useUnitDetailsActions = () => {
     []
   );
 
-  const remove = useRecoilCallback(() => async (id) => {
-    await axios.delete(`/v1/units/${id}`);
-  });
+  const remove = useRecoilCallback(
+    () => async (id) => {
+      await axios.delete(`/v1/units/${id}`);
+    },
+    []
+  );
 
-  return { fetch, update, remove };
+  const moveUnit = useRecoilCallback(
+    ({ set }) =>
+      async (id: string, list: string) => {
+        await axios.post(`/v1/units/move`, {
+          ids: [id],
+          list,
+        });
+
+        set(unitDetailsState, (prevState) => ({ ...prevState, list }));
+      },
+    []
+  );
+
+  return { fetch, update, remove, moveUnit };
 };
 
 export default useUnitDetailsActions;
