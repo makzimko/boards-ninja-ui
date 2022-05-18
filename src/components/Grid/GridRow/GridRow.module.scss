@@ -1,18 +1,21 @@
+@import '../../../styles/colors';
+
 .wrapper {
   display: flex;
   line-height: 20px;
-  border-right: 8px solid #D0D4E4;
+  border-right: 8px solid $primary-blue;
   gap: 2px;
 
   .status {
     width: 8px;
-    background: #C4C4C4;
+    background: $light-grey-4;
   }
 
   .cell {
     flex: 1 1;
     padding: 8px;
-    background: #F5F6F8;
+    background: $light-grey-1;
+    color: $dark-grey-3;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -24,7 +27,7 @@
 
   &:hover {
     .cell {
-      background-color: #E6E9EE;
+      background-color: $light-grey-2;
     }
   }
 }

@@ -5,36 +5,40 @@
   padding: 8px 16px;
   border: none;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 14px;
+  font-weight: 600;
   line-height: 20px;
+  margin: 0;
 
   &.appearance {
     &-default {
       background-color: $light-grey-2;
+      color: $dark-grey-6;
 
       &:hover {
         background-color: $light-grey-3;
+        color: $dark-grey-5;
       }
 
       &:active {
         background-color: $light-grey-4;
+        color: $dark-grey-4;
       }
     }
 
     &-ghost {
       background-color: $transparent;
+      color: $dark-grey-8;
 
       &:hover {
         background-color: $light-grey-1;
+        color: $dark-grey-7;
       }
 
       &:active {
         background-color: $light-grey-2;
+        color: $dark-grey-6;
       }
     }
-  }
-
-  &:hover {
-    background: #E6E9EE;
   }
 }
