@@ -10,6 +10,7 @@ import React, {
 import classNames from 'classnames';
 
 import { ComponentProps } from '../../types/component';
+import Button from '../../ui/Button';
 
 import styles from './InlineCreate.module.scss';
 
@@ -59,7 +60,9 @@ const InlineCreate: FC<InlineCreateProps> = ({
         ref={inputRef}
       />
       <div className={styles['left-gutter']} />
-      <input type="submit" className={styles.submit} value="Add" />
+      <Button type="submit" className={styles.submit}>
+        Add
+      </Button>
     </form>
   );
 };

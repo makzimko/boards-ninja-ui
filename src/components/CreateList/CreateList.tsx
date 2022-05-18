@@ -13,6 +13,7 @@ import { ComponentProps } from '../../types/component';
 import { CreateListSubmitHandler } from './types';
 
 import styles from './CreateList.module.scss';
+import Button from '../../ui/Button';
 
 type CreateListProps = {
   defaultValue?: string;
@@ -68,10 +69,18 @@ const CreateList: FC<CreateListProps> = ({
         onChange={handleChange}
         className={styles.input}
       />
-      <div className={styles.placeholder} onClick={startEditing}>
+      <Button
+        className={styles.placeholder}
+        appearance="ghost"
+        onClick={startEditing}
+        type="button"
+      >
         + New List
-      </div>
-      <input type="submit" value="Add" className={styles.submit} />
+      </Button>
+      <Button type="submit" className={styles.submit}>
+        Add
+      </Button>
+      {/*<input type="submit" value="Add" className={styles.submit} />*/}
     </form>
   );
 };
