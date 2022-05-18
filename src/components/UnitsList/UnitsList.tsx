@@ -10,6 +10,7 @@ import { Unit } from '../../types/unit';
 import InlineCreate from '../InlineCreate/InlineCreate';
 
 import styles from './UnitsList.module.scss';
+import UnitsListActions from './UnitsListActions/UnitsListActions';
 
 const statusColorFormatter: GridRowStatusColorFormatter = (value) => {
   const { completed } = value as unknown as Unit;
@@ -68,6 +69,7 @@ const UnitsList: FC<UnitsListProps> = ({ id, name, predefined = false }) => {
         title={predefined ? 'Units backlog' : name}
         items={formattedUnitsList}
         onItemClick={goToUnit}
+        headerExtraContent={<UnitsListActions />}
         statusColorFormatter={statusColorFormatter}
       />
       <InlineCreate
