@@ -1,9 +1,12 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, Fragment } from 'react';
 import { useParams } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
 
 import useListsActions, { listsListState } from '../../atoms/lists';
-import { useRecoilValue } from 'recoil';
 import UnitsList from '../../components/UnitsList/UnitsList';
+import CreateList from '../../components/CreateList/CreateList';
+
+import styles from './ProjectLists.module.scss';
 
 const ProjectLists = () => {
   const { projectKey } = useParams();
@@ -16,9 +19,14 @@ const ProjectLists = () => {
     }
   }, [fetch, projectKey]);
   return (
-    <div>
+    <div className={styles.wrapper}>
       {lists.map(({ _id, name, predefined }) => (
-        <UnitsList key={_id} id={_id} name={name} predefined={predefined} />
+        <Fragment key={_id}>
+          {predefined && (
+            <CreateList containerClassName={styles['create-list']} />
+          )}
+          <UnitsList id={_id} name={name} predefined={predefined} />
+        </Fragment>
       ))}
     </div>
   );
