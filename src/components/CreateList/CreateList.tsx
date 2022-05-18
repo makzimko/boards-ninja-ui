@@ -3,6 +3,7 @@ import React, {
   FC,
   FormEventHandler,
   useCallback,
+  useEffect,
   useRef,
   useState,
 } from 'react';
@@ -14,10 +15,15 @@ import { CreateListSubmitHandler } from './types';
 import styles from './CreateList.module.scss';
 
 type CreateListProps = {
+  defaultValue?: string;
   onSubmit?: CreateListSubmitHandler;
 } & ComponentProps;
 
-const CreateList: FC<CreateListProps> = ({ onSubmit, containerClassName }) => {
+const CreateList: FC<CreateListProps> = ({
+  defaultValue = '',
+  onSubmit,
+  containerClassName,
+}) => {
   const [value, setValue] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -32,11 +38,18 @@ const CreateList: FC<CreateListProps> = ({ onSubmit, containerClassName }) => {
     [setValue]
   );
 
+  useEffect(() => {
+    setValue(defaultValue);
+  }, [defaultValue]);
+
   const handleSubmit = useCallback<FormEventHandler>(
     (e) => {
       e.preventDefault();
       if (value && onSubmit) {
         onSubmit(value);
+      }
+      if (inputRef.current) {
+        inputRef.current.blur();
       }
     },
     [value]

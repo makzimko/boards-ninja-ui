@@ -1,4 +1,4 @@
-import React, { useEffect, Fragment } from 'react';
+import React, { Fragment, useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 
@@ -7,27 +7,50 @@ import UnitsList from '../../components/UnitsList/UnitsList';
 import CreateList from '../../components/CreateList/CreateList';
 
 import styles from './ProjectLists.module.scss';
+import { LOADING } from '../../atoms/loading';
 
 const ProjectLists = () => {
   const { projectKey } = useParams();
-  const { fetch } = useListsActions();
+  const { fetch, createListInProject } = useListsActions();
   const lists = useRecoilValue(listsListState);
+  const [newListName, setNewListName] = useState('');
+  const [listsLoading, setListsLoading] = useState(LOADING.INITIAL);
 
   useEffect(() => {
+    setListsLoading(LOADING.PENDING);
     if (projectKey) {
-      fetch(projectKey);
+      fetch(projectKey).then(() => {
+        setListsLoading(LOADING.SUCCESS);
+      });
     }
   }, [fetch, projectKey]);
+
+  const createList = useCallback(
+    (name: string) => {
+      if (projectKey) {
+        setNewListName(name);
+        createListInProject(name, projectKey).then(() => {
+          setNewListName('');
+        });
+      }
+    },
+    [projectKey]
+  );
   return (
     <div className={styles.wrapper}>
-      {lists.map(({ _id, name, predefined }) => (
-        <Fragment key={_id}>
-          {predefined && (
-            <CreateList containerClassName={styles['create-list']} />
-          )}
-          <UnitsList id={_id} name={name} predefined={predefined} />
-        </Fragment>
-      ))}
+      {listsLoading === LOADING.SUCCESS &&
+        lists.map(({ _id, name, predefined }) => (
+          <Fragment key={_id}>
+            {predefined && (
+              <CreateList
+                containerClassName={styles['create-list']}
+                onSubmit={createList}
+                defaultValue={newListName}
+              />
+            )}
+            <UnitsList id={_id} name={name} predefined={predefined} />
+          </Fragment>
+        ))}
     </div>
   );
 };
