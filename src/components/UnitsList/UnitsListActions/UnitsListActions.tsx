@@ -1,13 +1,34 @@
-import React, { FC } from 'react';
+import React, { FC, useCallback, useState } from 'react';
+
 import Button from '../../../ui/Button';
+import Popup from '../../Popup/Popup';
 
 import styles from './UnitsListActions.module.scss';
 
-const UnitsListActions: FC = () => {
+type UnitsListActionsProps = {
+  listId: string;
+};
+
+const UnitsListActions: FC<UnitsListActionsProps> = () => {
+  const [popupOpened, setPopupOpened] = useState(false);
+
+  const togglePopup = useCallback(() => {
+    setPopupOpened((opened) => !opened);
+  }, [setPopupOpened]);
+
   return (
     <div className={styles.wrapper}>
-      <Button>Archive</Button>
-      <Button>Remove</Button>
+      <Button appearance="ghost" onClick={togglePopup}>
+        ⋮
+      </Button>
+      {popupOpened && (
+        <Popup onMaskClick={togglePopup}>
+          <div className={styles.actions}>
+            <Button>Archive</Button>
+            <Button>Remove</Button>
+          </div>
+        </Popup>
+      )}
     </div>
   );
 };

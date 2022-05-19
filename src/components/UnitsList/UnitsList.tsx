@@ -69,7 +69,7 @@ const UnitsList: FC<UnitsListProps> = ({ id, name, predefined = false }) => {
         title={predefined ? 'Units backlog' : name}
         items={formattedUnitsList}
         onItemClick={goToUnit}
-        headerExtraContent={<UnitsListActions />}
+        headerExtraContent={<UnitsListActions listId={id} />}
         statusColorFormatter={statusColorFormatter}
       />
       <InlineCreate
