@@ -29,4 +29,9 @@ export type GridRowStatusColorFormatter = (
   item: GridItem
 ) => string | undefined;
 
-export type GridRowDetails = FC<{ id: string }>;
+export type GridRowDetailsProps = {
+  id: string;
+  close?: () => void;
+};
+
+export type GridRowDetails = FC<GridRowDetailsProps>;

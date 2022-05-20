@@ -58,7 +58,9 @@ const GridRow: FC<GridRowProps> = ({
           ⋯
         </Button>
       )}
-      {detailsVisible && RowDetailsComponent && <RowDetailsComponent id={id} />}
+      {detailsVisible && RowDetailsComponent && (
+        <RowDetailsComponent id={id} close={toggleDetails} />
+      )}
     </div>
   );
 };

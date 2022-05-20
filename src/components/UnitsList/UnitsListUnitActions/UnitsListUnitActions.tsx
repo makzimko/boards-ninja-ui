@@ -1,7 +1,46 @@
-import React, { FC } from 'react';
+import React, { FC, useCallback, useMemo } from 'react';
 
-const UnitsListUnitActions: FC = () => {
-  return <div>units list unit actions</div>;
+import { GridRowDetailsProps } from '../../Grid';
+import Popup from '../../Popup/Popup';
+import Menu from '../../Menu/Menu';
+import { MenuDivider, MenuItemClickHandler } from '../../Menu/types';
+import { useNavigate } from 'react-router-dom';
+
+const items = [
+  { id: 'details', name: 'Show details' },
+  MenuDivider,
+  { id: 'complete', name: 'Set as completed' },
+  { id: 'move', name: 'Move to another list' },
+  MenuDivider,
+  { id: 'remove', name: 'Remove item' },
+];
+
+const UnitsListUnitActions: FC<GridRowDetailsProps> = ({ id, close }) => {
+  const navigate = useNavigate();
+
+  const actions: Record<string, () => void> = useMemo(
+    () => ({
+      details: () => navigate(`units/${id}`),
+    }),
+    [navigate, id]
+  );
+
+  const itemClickHandler: MenuItemClickHandler = useCallback(
+    (id) => {
+      const action = actions[id];
+
+      if (action) {
+        action();
+      }
+    },
+    [actions]
+  );
+
+  return (
+    <Popup onMaskClick={close}>
+      <Menu items={items} onItemClick={itemClickHandler} />
+    </Popup>
+  );
 };
 
 export default UnitsListUnitActions;
