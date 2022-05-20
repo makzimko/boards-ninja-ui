@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import { ComponentProps } from '../../types/component';
 import Grid, {
   GridColumn,
+  GridMoreButtonClickHandler,
   GridRowCellClickHandler,
   GridRowStatusColorFormatter,
 } from '../Grid';
@@ -17,6 +18,7 @@ export type SimpleListProps = {
   onItemClick?: SimpleListItemClickHandler;
   statusColorFormatter?: GridRowStatusColorFormatter;
   headerExtraContent?: ReactNode;
+  onMoreButtonClick?: GridMoreButtonClickHandler;
 } & ComponentProps;
 
 const SIMPLE_LIST_GRID_COLUMNS: GridColumn[] = [
@@ -33,6 +35,7 @@ const SimpleList: FC<SimpleListProps> = ({
   statusColorFormatter,
   headerExtraContent,
   containerClassName,
+  onMoreButtonClick,
 }) => {
   const handleItemsClick = useCallback<GridRowCellClickHandler>(
     ({ id }) => {
@@ -54,6 +57,7 @@ const SimpleList: FC<SimpleListProps> = ({
         columns={SIMPLE_LIST_GRID_COLUMNS}
         onCellClick={handleItemsClick}
         statusColorFormatter={statusColorFormatter}
+        onMoreButtonClick={onMoreButtonClick}
       />
     </div>
   );

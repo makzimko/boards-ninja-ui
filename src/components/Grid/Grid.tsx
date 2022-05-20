@@ -4,6 +4,7 @@ import {
   GridColumn,
   GridColumnFormatter,
   GridItem,
+  GridMoreButtonClickHandler,
   GridRowCellClickHandler,
   GridRowStatusColorFormatter,
   RowItem,
@@ -17,6 +18,7 @@ type GridProps = {
   columns: GridColumn[];
   onCellClick?: GridRowCellClickHandler;
   statusColorFormatter?: GridRowStatusColorFormatter;
+  onMoreButtonClick?: GridMoreButtonClickHandler;
 };
 
 const defaultFormatter: GridColumnFormatter = (_, value: unknown) => value;
@@ -26,6 +28,7 @@ const Grid: FC<GridProps> = ({
   columns,
   onCellClick,
   statusColorFormatter = () => undefined,
+  onMoreButtonClick,
 }) => {
   const rows = useMemo(
     () =>
@@ -53,6 +56,7 @@ const Grid: FC<GridProps> = ({
             items={items}
             onCellClick={onCellClick}
             statusColor={statusColor}
+            onMoreButtonClick={onMoreButtonClick}
           />
         ))}
       </div>

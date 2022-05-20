@@ -71,6 +71,7 @@ const UnitsList: FC<UnitsListProps> = ({ id, name, predefined = false }) => {
         onItemClick={goToUnit}
         headerExtraContent={<UnitsListActions listId={id} />}
         statusColorFormatter={statusColorFormatter}
+        onMoreButtonClick={console.log}
       />
       <InlineCreate
         containerClassName={styles['add-item']}

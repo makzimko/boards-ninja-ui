@@ -26,3 +26,5 @@ export type RowItem = {
 export type GridRowStatusColorFormatter = (
   item: GridItem
 ) => string | undefined;
+
+export type GridMoreButtonClickHandler = (id: string) => void;

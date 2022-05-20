@@ -1,7 +1,12 @@
 import React, { FC, MouseEventHandler, useCallback } from 'react';
 import classNames from 'classnames';
 
-import { GridRowCellClickHandler, RowItem } from '../types';
+import {
+  GridMoreButtonClickHandler,
+  GridRowCellClickHandler,
+  RowItem,
+} from '../types';
+import Button from '../../../ui/Button';
 
 import styles from './GridRow.module.scss';
 
@@ -10,9 +15,16 @@ type GridRowProps = {
   items: RowItem[];
   onCellClick?: GridRowCellClickHandler;
   statusColor?: string;
+  onMoreButtonClick?: GridMoreButtonClickHandler;
 };
 
-const GridRow: FC<GridRowProps> = ({ id, items, onCellClick, statusColor }) => {
+const GridRow: FC<GridRowProps> = ({
+  id,
+  items,
+  onCellClick,
+  statusColor,
+  onMoreButtonClick,
+}) => {
   const handleCellClick = useCallback<MouseEventHandler<HTMLDivElement>>(
     ({ currentTarget }) => {
       const { field } = currentTarget.dataset;
@@ -23,6 +35,12 @@ const GridRow: FC<GridRowProps> = ({ id, items, onCellClick, statusColor }) => {
     },
     [onCellClick, id]
   );
+
+  const moreButtonClickHandler = useCallback(
+    () => onMoreButtonClick && onMoreButtonClick(id),
+    [onMoreButtonClick, id]
+  );
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.status} style={{ backgroundColor: statusColor }} />
@@ -38,6 +56,14 @@ const GridRow: FC<GridRowProps> = ({ id, items, onCellClick, statusColor }) => {
           {value as string}
         </div>
       ))}
+      {onMoreButtonClick && (
+        <Button
+          className={styles['more-button']}
+          onClick={moreButtonClickHandler}
+        >
+          ⋯
+        </Button>
+      )}
     </div>
   );
 };

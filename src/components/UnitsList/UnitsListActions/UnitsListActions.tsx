@@ -19,7 +19,7 @@ const UnitsListActions: FC<UnitsListActionsProps> = () => {
   return (
     <div className={styles.wrapper}>
       <Button appearance="ghost" onClick={togglePopup}>
-        ⋮
+        ☰
       </Button>
       {popupOpened && (
         <Popup onMaskClick={togglePopup}>
