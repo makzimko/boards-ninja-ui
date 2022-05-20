@@ -4,31 +4,26 @@ import {
   GridColumn,
   GridColumnFormatter,
   GridItem,
-  GridMoreButtonClickHandler,
-  GridRowCellClickHandler,
   GridRowStatusColorFormatter,
   RowItem,
 } from './types';
-import GridRow from './GridRow/GridRow';
+import GridRow, { GridRowProps } from './GridRow/GridRow';
 
 import styles from './Grid.module.scss';
 
-type GridProps = {
+export type GridProps = {
   items: GridItem[];
   columns: GridColumn[];
-  onCellClick?: GridRowCellClickHandler;
   statusColorFormatter?: GridRowStatusColorFormatter;
-  onMoreButtonClick?: GridMoreButtonClickHandler;
-};
+} & Omit<GridRowProps, 'id' | 'items' | 'statusColor'>;
 
 const defaultFormatter: GridColumnFormatter = (_, value: unknown) => value;
 
 const Grid: FC<GridProps> = ({
   items,
   columns,
-  onCellClick,
   statusColorFormatter = () => undefined,
-  onMoreButtonClick,
+  ...rest
 }) => {
   const rows = useMemo(
     () =>
@@ -54,9 +49,8 @@ const Grid: FC<GridProps> = ({
             key={id}
             id={id}
             items={items}
-            onCellClick={onCellClick}
             statusColor={statusColor}
-            onMoreButtonClick={onMoreButtonClick}
+            {...rest}
           />
         ))}
       </div>

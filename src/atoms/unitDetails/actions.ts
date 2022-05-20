@@ -3,7 +3,6 @@ import axios from 'axios';
 
 import { unitDetailsState } from './atoms';
 import { UnitDetails } from './types';
-import { unitsListState } from '../unitsList/atoms';
 
 const useUnitDetailsActions = () => {
   const fetch = useRecoilCallback(

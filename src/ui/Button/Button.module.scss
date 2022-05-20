@@ -41,4 +41,12 @@
       }
     }
   }
+
+  &.variant {
+    &-square {
+      display: flex;
+      justify-content: center;
+      width: 36px;
+    }
+  }
 }

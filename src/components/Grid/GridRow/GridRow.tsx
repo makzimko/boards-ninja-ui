@@ -1,21 +1,17 @@
-import React, { FC, MouseEventHandler, useCallback } from 'react';
+import React, { FC, MouseEventHandler, useCallback, useState } from 'react';
 import classNames from 'classnames';
 
-import {
-  GridMoreButtonClickHandler,
-  GridRowCellClickHandler,
-  RowItem,
-} from '../types';
+import { GridRowCellClickHandler, GridRowDetails, RowItem } from '../types';
 import Button from '../../../ui/Button';
 
 import styles from './GridRow.module.scss';
 
-type GridRowProps = {
+export type GridRowProps = {
   id: string;
   items: RowItem[];
   onCellClick?: GridRowCellClickHandler;
   statusColor?: string;
-  onMoreButtonClick?: GridMoreButtonClickHandler;
+  rowDetails?: GridRowDetails;
 };
 
 const GridRow: FC<GridRowProps> = ({
@@ -23,7 +19,7 @@ const GridRow: FC<GridRowProps> = ({
   items,
   onCellClick,
   statusColor,
-  onMoreButtonClick,
+  rowDetails: RowDetailsComponent,
 }) => {
   const handleCellClick = useCallback<MouseEventHandler<HTMLDivElement>>(
     ({ currentTarget }) => {
@@ -36,10 +32,11 @@ const GridRow: FC<GridRowProps> = ({
     [onCellClick, id]
   );
 
-  const moreButtonClickHandler = useCallback(
-    () => onMoreButtonClick && onMoreButtonClick(id),
-    [onMoreButtonClick, id]
-  );
+  const [detailsVisible, setDetailsVisible] = useState(false);
+
+  const toggleDetails = useCallback(() => {
+    setDetailsVisible((prevValue) => !prevValue);
+  }, [setDetailsVisible]);
 
   return (
     <div className={styles.wrapper}>
@@ -56,14 +53,12 @@ const GridRow: FC<GridRowProps> = ({
           {value as string}
         </div>
       ))}
-      {onMoreButtonClick && (
-        <Button
-          className={styles['more-button']}
-          onClick={moreButtonClickHandler}
-        >
+      {RowDetailsComponent && (
+        <Button variant="square" onClick={toggleDetails}>
           ⋯
         </Button>
       )}
+      {detailsVisible && RowDetailsComponent && <RowDetailsComponent id={id} />}
     </div>
   );
 };

@@ -13,7 +13,6 @@ import SimpleList, {
 } from '../SimpleList';
 
 import styles from './ProjectsList.module.scss';
-import Button from '../../ui/Button';
 
 const ProjectsList: FC = () => {
   const { fetchAll } = useProjectsListActions();

@@ -11,6 +11,7 @@ import InlineCreate from '../InlineCreate/InlineCreate';
 
 import styles from './UnitsList.module.scss';
 import UnitsListActions from './UnitsListActions/UnitsListActions';
+import UnitsListUnitActions from './UnitsListUnitActions/UnitsListUnitActions';
 
 const statusColorFormatter: GridRowStatusColorFormatter = (value) => {
   const { completed } = value as unknown as Unit;
@@ -71,7 +72,7 @@ const UnitsList: FC<UnitsListProps> = ({ id, name, predefined = false }) => {
         onItemClick={goToUnit}
         headerExtraContent={<UnitsListActions listId={id} />}
         statusColorFormatter={statusColorFormatter}
-        onMoreButtonClick={console.log}
+        rowDetails={UnitsListUnitActions}
       />
       <InlineCreate
         containerClassName={styles['add-item']}

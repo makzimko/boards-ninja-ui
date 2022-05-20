@@ -1,3 +1,5 @@
+import { FC } from 'react';
+
 export type GridRowCellClickHandler = (options: {
   id: string;
   field: string;
@@ -27,4 +29,4 @@ export type GridRowStatusColorFormatter = (
   item: GridItem
 ) => string | undefined;
 
-export type GridMoreButtonClickHandler = (id: string) => void;
+export type GridRowDetails = FC<{ id: string }>;
