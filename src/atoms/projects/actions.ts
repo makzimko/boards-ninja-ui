@@ -1,8 +1,6 @@
 import { useRecoilCallback } from 'recoil';
 import axios from 'axios';
-
-import { ProjectsList } from '../projectsList/types';
-import { ProjectKey } from './types';
+import { ProjectKey, ProjectsList } from './types';
 import { projectKeysState, projectState } from './atoms';
 
 const useProjects = () => {
