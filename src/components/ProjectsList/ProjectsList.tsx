@@ -1,32 +1,32 @@
-import React, { FC, useCallback, useEffect, useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import { useRecoilValue } from 'recoil';
+import { useNavigate } from 'react-router-dom';
 
-import useProjectsListActions, {
-  projectsListLoadingState,
-  projectsListState,
-} from '../../atoms/projectsList';
-import { LOADING } from '../../atoms/loading';
 import SimpleList, {
   SimpleListItem,
   SimpleListItemClickHandler,
 } from '../SimpleList';
+import { LOADING } from '../../atoms/loading';
+import useProjects, { projectsListState } from '../../atoms/projects';
 
 import styles from './ProjectsList.module.scss';
 
 const ProjectsList: FC = () => {
-  const { fetchAll } = useProjectsListActions();
+  const { fetchList } = useProjects();
   const projectsList = useRecoilValue(projectsListState);
-  const projectsListLoading = useRecoilValue(projectsListLoadingState);
+
+  const [loading, setLoading] = useState(LOADING.INITIAL);
+
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (projectsListLoading === LOADING.INITIAL) {
-      fetchAll();
-    }
-  }, [projectsListLoading]);
+    setLoading(LOADING.PENDING);
+    fetchList()
+      .then(() => setLoading(LOADING.SUCCESS))
+      .catch(() => setLoading(LOADING.ERROR));
+  }, [fetchList, setLoading]);
 
-  const formattedProjectList2 = useMemo(
+  const formattedProjectList = useMemo(
     () =>
       projectsList.map<SimpleListItem>(({ key, name }) => ({ id: key, name })),
     [projectsList]
@@ -36,16 +36,16 @@ const ProjectsList: FC = () => {
     navigate(`/projects/${id}`);
   }, []);
 
-  if ([LOADING.INITIAL, LOADING.PENDING].includes(projectsListLoading)) {
+  if ([LOADING.INITIAL, LOADING.PENDING].includes(loading)) {
     return <h3>projects list loading...</h3>;
   }
 
-  if (projectsListLoading === LOADING.ERROR) {
+  if (loading === LOADING.ERROR) {
     return (
       <div>
         failed to load projects list
         <br />
-        <button onClick={fetchAll}>retry</button>
+        <button onClick={fetchList}>retry</button>
       </div>
     );
   }
@@ -53,7 +53,7 @@ const ProjectsList: FC = () => {
     <div className={styles.wrapper}>
       <SimpleList
         title="Projects list"
-        items={formattedProjectList2}
+        items={formattedProjectList}
         onItemClick={goToProject}
       />
     </div>
