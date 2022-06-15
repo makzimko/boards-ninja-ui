@@ -56,6 +56,16 @@ const useUnitsActions = () => {
     []
   );
 
+  const toggleCompleteness = useRecoilCallback(
+    ({ snapshot }) =>
+      async (id: UnitId) => {
+        const { completed } = snapshot.getLoadable(unitState(id)).contents;
+
+        await updateById(id, { completed: !completed });
+      },
+    []
+  );
+
   const createUnitInList = useRecoilCallback(
     ({ set }) =>
       async ({ name, listId }: Pick<Unit, 'name'> & { listId: ListId }) => {
@@ -120,6 +130,7 @@ const useUnitsActions = () => {
     fetchByListId,
     fetchById,
     updateById,
+    toggleCompleteness,
     createUnitInList,
     removeById,
     moveUnit,

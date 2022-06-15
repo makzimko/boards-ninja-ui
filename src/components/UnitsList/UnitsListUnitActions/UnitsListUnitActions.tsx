@@ -10,7 +10,7 @@ import useUnitsActions from '../../../atoms/units';
 const items = [
   { id: 'details', name: 'Show details' },
   MenuDivider,
-  { id: 'complete', name: 'Set as completed' },
+  { id: 'complete', name: 'Toggle completeness' },
   { id: 'move', name: 'Move to another list' },
   MenuDivider,
   { id: 'remove', name: 'Remove item' },
@@ -18,11 +18,12 @@ const items = [
 
 const UnitsListUnitActions: FC<GridRowDetailsProps> = ({ id, close }) => {
   const navigate = useNavigate();
-  const { removeById } = useUnitsActions();
+  const { removeById, toggleCompleteness } = useUnitsActions();
 
   const actions: Record<string, () => void> = useMemo(
     () => ({
       details: () => navigate(`units/${id}`),
+      complete: () => toggleCompleteness(id).then(close),
       remove: () => removeById(id).then(close),
     }),
     [navigate, id]
