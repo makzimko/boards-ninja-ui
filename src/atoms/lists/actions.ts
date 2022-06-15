@@ -1,18 +1,28 @@
 import { useRecoilCallback } from 'recoil';
 import axios from 'axios';
 
-import { List, ListsList } from './types';
-import { listsListState } from './atoms';
+import { ApiList, ListId } from './types';
+import { listState, listIdsState } from './atoms';
 
 const useListsActions = () => {
   const fetch = useRecoilCallback(
     ({ set }) =>
       async (projectKey: string) => {
-        const { data } = await axios.get<ListsList>(
+        const { data } = await axios.get<ApiList[]>(
           `/v1/projects/${projectKey}/lists`
         );
 
-        set(listsListState, data);
+        const listIds = data.map<ListId>(({ _id, ...rest }) => {
+          set(listState(_id), (currVal) => ({
+            ...currVal,
+            id: _id,
+            ...rest,
+          }));
+
+          return _id;
+        });
+
+        set(listIdsState, listIds);
       },
     []
   );
@@ -20,16 +30,20 @@ const useListsActions = () => {
   const createListInProject = useRecoilCallback(
     ({ set }) =>
       async (name: string, projectKey: string) => {
-        const { data } = await axios.post<List>(
+        const { data } = await axios.post<ApiList>(
           `/v1/projects/${projectKey}/lists`,
           {
             name,
           }
         );
 
-        set(listsListState, (prevValue) => [
+        const { _id: id, ...rest } = data;
+
+        set(listState(id), { id, ...rest });
+
+        set(listIdsState, (prevValue) => [
           ...prevValue.slice(0, -1),
-          data,
+          id,
           ...prevValue.slice(-1),
         ]);
       },
