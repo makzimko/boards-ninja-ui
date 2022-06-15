@@ -31,9 +31,6 @@ type UnitsListProps = {
 const UnitsList: FC<UnitsListProps> = ({ id, name, predefined = false }) => {
   const { fetchByListId, createUnitInList } = useUnitsActions();
   const listUnits = useRecoilValue(listUnitsState(id));
-
-  console.log('UNITS_LIST', listUnits);
-
   const [newItemName, setNewItemName] = useState('');
   const navigate = useNavigate();
 
