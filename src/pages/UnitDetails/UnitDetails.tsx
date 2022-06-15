@@ -46,7 +46,7 @@ const UnitDetails = () => {
   const lists = useRecoilValue(listsListState);
   const otherLists = useMemo(
     () =>
-      unitDetails ? lists.filter(({ _id }) => _id !== unitDetails.list) : [],
+      unitDetails ? lists.filter(({ id }) => id !== unitDetails.list) : [],
     [lists, unitDetails]
   );
   const [newList, setNewList] = useState('');
@@ -81,7 +81,7 @@ const UnitDetails = () => {
 
   useEffect(() => {
     if (otherLists.length > 0) {
-      setNewList(otherLists[0]._id);
+      setNewList(otherLists[0].id);
     }
   }, [otherLists]);
 
@@ -132,8 +132,8 @@ const UnitDetails = () => {
       {otherLists.length > 0 && (
         <div>
           <select onChange={handleListChange} value={newList}>
-            {otherLists.map(({ _id, name }) => (
-              <option key={_id} value={_id}>
+            {otherLists.map(({ id, name }) => (
+              <option key={id} value={id}>
                 {name}
               </option>
             ))}

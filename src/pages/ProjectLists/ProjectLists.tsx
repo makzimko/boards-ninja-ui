@@ -39,8 +39,8 @@ const ProjectLists = () => {
   return (
     <div className={styles.wrapper}>
       {listsLoading === LOADING.SUCCESS &&
-        lists.map(({ _id, name, predefined }) => (
-          <Fragment key={_id}>
+        lists.map(({ id, name, predefined }) => (
+          <Fragment key={id}>
             {predefined && (
               <CreateList
                 containerClassName={styles['create-list']}
@@ -48,7 +48,7 @@ const ProjectLists = () => {
                 defaultValue={newListName}
               />
             )}
-            <UnitsList id={_id} name={name} predefined={predefined} />
+            <UnitsList id={id} name={name} predefined={predefined} />
           </Fragment>
         ))}
     </div>
