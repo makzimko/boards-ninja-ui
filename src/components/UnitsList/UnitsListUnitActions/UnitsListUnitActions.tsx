@@ -5,6 +5,7 @@ import Popup from '../../Popup/Popup';
 import Menu from '../../Menu/Menu';
 import { MenuDivider, MenuItemClickHandler } from '../../Menu/types';
 import { useNavigate } from 'react-router-dom';
+import useUnitsActions from '../../../atoms/units';
 
 const items = [
   { id: 'details', name: 'Show details' },
@@ -17,10 +18,12 @@ const items = [
 
 const UnitsListUnitActions: FC<GridRowDetailsProps> = ({ id, close }) => {
   const navigate = useNavigate();
+  const { removeById } = useUnitsActions();
 
   const actions: Record<string, () => void> = useMemo(
     () => ({
       details: () => navigate(`units/${id}`),
+      remove: () => removeById(id).then(close),
     }),
     [navigate, id]
   );

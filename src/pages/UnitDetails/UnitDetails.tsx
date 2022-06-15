@@ -6,11 +6,12 @@ import React, {
   useState,
 } from 'react';
 import { useRecoilValue } from 'recoil';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
-import useUnitDetailsActions from '../../atoms/unitDetails/actions';
 import { LOADING } from '../../atoms/loading';
-import { unitDetailsState } from '../../atoms/unitDetails/atoms';
+import Button from '../../ui/Button';
+import useUnitsActions, { unitState } from '../../atoms/units';
+import useListsActions, { listsListState } from '../../atoms/lists';
 
 import styles from './UnitDetails.module.scss';
 import Grid, {
@@ -18,10 +19,8 @@ import Grid, {
   GridColumnFormatter,
   GridItem,
 } from '../../components/Grid';
-import Button from '../../ui/Button';
-import useListsActions, { listsListState } from '../../atoms/lists';
 
-const UNIT_DETAILS_FIELD = ['_id', 'name', 'completed', 'project', 'list'];
+const UNIT_DETAILS_FIELD = ['id', 'name', 'completed', 'project', 'list'];
 const valueFormatter: GridColumnFormatter = ({ id }, value) => {
   if (id === 'completed') {
     return (value as boolean).toString();
@@ -37,11 +36,10 @@ const UNIT_DETAILS_GRID_COLUMNS: GridColumn[] = [
 ];
 
 const UnitDetails = () => {
+  const { fetchById, removeById, moveUnit, updateById } = useUnitsActions();
   const { id, projectKey } = useParams();
-  const { fetch, update, remove, moveUnit } = useUnitDetailsActions();
   const [fetchStatus, setFetchStatus] = useState(LOADING.INITIAL);
-  const unitDetails = useRecoilValue(unitDetailsState);
-  const navigate = useNavigate();
+  const unitDetails = useRecoilValue(unitState(id ?? ''));
   const { fetch: fetchLists } = useListsActions();
   const lists = useRecoilValue(listsListState);
   const otherLists = useMemo(
@@ -73,11 +71,11 @@ const UnitDetails = () => {
     setFetchStatus(LOADING.PENDING);
 
     if (id) {
-      fetch(id)
+      fetchById(id)
         .then(() => setFetchStatus(LOADING.SUCCESS))
         .catch(() => setFetchStatus(LOADING.ERROR));
     }
-  }, [id, fetch]);
+  }, [id, fetchById]);
 
   useEffect(() => {
     if (otherLists.length > 0) {
@@ -87,18 +85,19 @@ const UnitDetails = () => {
 
   const changeCompleteness = useCallback(() => {
     if (id && unitDetails) {
-      update(id, { completed: !unitDetails.completed });
+      updateById(id, { completed: !unitDetails.completed });
     }
-  }, [update, unitDetails]);
+  }, [updateById, unitDetails]);
 
   const handleRemove = useCallback(() => {
     if (id) {
-      remove(id).then(() => {
-        // TODO: make redirect to project
-        navigate(`/projects/${unitDetails.project}/units`);
-      });
+      removeById(id);
+      // remove(id).then(() => {
+      //   // TODO: make redirect to project
+      //   navigate(`/projects/${unitDetails.project}/units`);
+      // });
     }
-  }, [remove, unitDetails]);
+  }, [unitDetails, removeById]);
 
   const handleListChange = useCallback<ChangeEventHandler<HTMLSelectElement>>(
     ({ currentTarget }) => {

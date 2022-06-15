@@ -7,8 +7,6 @@ const HomePage: FC = () => {
   const userInfo = useRecoilValue(userInfoState);
   const { logout } = useAuthActions();
 
-  console.log('USRE', userInfo);
-
   return (
     <div>
       <h1>boards ninja</h1>
