@@ -2,16 +2,16 @@ import React, { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 
-import useUnitsListActions from '../../atoms/unitsList/actions';
+import useUnitsActions from '../../atoms/units/actions';
+import { listUnitsState } from '../../atoms/units/atoms';
 import SimpleList from '../SimpleList';
-import { unitsListState } from '../../atoms/unitsList/atoms';
 import { GridRowStatusColorFormatter } from '../Grid';
 import { Unit } from '../../types/unit';
 import InlineCreate from '../InlineCreate/InlineCreate';
 
-import styles from './UnitsList.module.scss';
 import UnitsListActions from './UnitsListActions/UnitsListActions';
 import UnitsListUnitActions from './UnitsListUnitActions/UnitsListUnitActions';
+import styles from './UnitsList.module.scss';
 
 const statusColorFormatter: GridRowStatusColorFormatter = (value) => {
   const { completed } = value as unknown as Unit;
@@ -28,26 +28,27 @@ type UnitsListProps = {
 };
 
 const UnitsList: FC<UnitsListProps> = ({ id, name, predefined = false }) => {
-  const { fetchByList, addUnitToList } = useUnitsListActions();
-  const unitsList = useRecoilValue(unitsListState(id));
+  const { fetchByListId, createUnitInList } = useUnitsActions();
+  const listUnits = useRecoilValue(listUnitsState(id));
+
   const [newItemName, setNewItemName] = useState('');
   const navigate = useNavigate();
 
   const formattedUnitsList = useMemo(
     () =>
-      unitsList.map(({ _id, name, completed }) => ({
-        id: _id,
+      listUnits.map(({ id, name, completed }) => ({
+        id,
         name,
         completed,
       })),
-    [unitsList]
+    [listUnits]
   );
 
   const createNewItem = useCallback((value: string) => {
     if (value && id) {
       setNewItemName(value);
 
-      addUnitToList({
+      createUnitInList({
         name: value,
         listId: id,
       }).then(() => {
@@ -61,8 +62,8 @@ const UnitsList: FC<UnitsListProps> = ({ id, name, predefined = false }) => {
   }, []);
 
   useEffect(() => {
-    fetchByList(id);
-  }, [id, fetchByList]);
+    fetchByListId(id);
+  }, [id, fetchByListId]);
 
   return (
     <div className={styles.wrapper}>
