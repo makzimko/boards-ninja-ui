@@ -19,6 +19,7 @@ import Grid, {
   GridColumnFormatter,
   GridItem,
 } from '../../components/Grid';
+import MoveUnit from '../../components/MoveUnit/MoveUnit';
 
 const UNIT_DETAILS_FIELD = ['id', 'name', 'completed', 'project', 'list'];
 const valueFormatter: GridColumnFormatter = ({ id }, value) => {
@@ -36,18 +37,11 @@ const UNIT_DETAILS_GRID_COLUMNS: GridColumn[] = [
 ];
 
 const UnitDetails = () => {
-  const { fetchById, removeById, moveUnit, updateById } = useUnitsActions();
+  const { fetchById, removeById, updateById } = useUnitsActions();
   const { id, projectKey } = useParams();
   const [fetchStatus, setFetchStatus] = useState(LOADING.INITIAL);
   const unitDetails = useRecoilValue(unitState(id ?? ''));
   const { fetch: fetchLists } = useListsActions();
-  const lists = useRecoilValue(listsListState);
-  const otherLists = useMemo(
-    () =>
-      unitDetails ? lists.filter(({ id }) => id !== unitDetails.list) : [],
-    [lists, unitDetails]
-  );
-  const [newList, setNewList] = useState('');
 
   const gridData = useMemo<GridItem[]>(() => {
     if (!unitDetails) {
@@ -77,12 +71,6 @@ const UnitDetails = () => {
     }
   }, [id, fetchById]);
 
-  useEffect(() => {
-    if (otherLists.length > 0) {
-      setNewList(otherLists[0].id);
-    }
-  }, [otherLists]);
-
   const changeCompleteness = useCallback(() => {
     if (id && unitDetails) {
       updateById(id, { completed: !unitDetails.completed });
@@ -98,19 +86,6 @@ const UnitDetails = () => {
       // });
     }
   }, [unitDetails, removeById]);
-
-  const handleListChange = useCallback<ChangeEventHandler<HTMLSelectElement>>(
-    ({ currentTarget }) => {
-      setNewList(currentTarget.value);
-    },
-    []
-  );
-
-  const handleMove = useCallback(() => {
-    if (id) {
-      moveUnit(id, newList);
-    }
-  }, [newList, moveUnit]);
 
   if ([LOADING.INITIAL, LOADING.PENDING].includes(fetchStatus)) {
     return <div>loading</div>;
@@ -128,18 +103,7 @@ const UnitDetails = () => {
         </Button>
         <Button onClick={handleRemove}>Remove</Button>
       </div>
-      {otherLists.length > 0 && (
-        <div>
-          <select onChange={handleListChange} value={newList}>
-            {otherLists.map(({ id, name }) => (
-              <option key={id} value={id}>
-                {name}
-              </option>
-            ))}
-          </select>
-          <Button onClick={handleMove}>Move</Button>
-        </div>
-      )}
+      {id && <MoveUnit id={id} />}
       <Grid
         items={gridData}
         columns={UNIT_DETAILS_GRID_COLUMNS}

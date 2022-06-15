@@ -121,7 +121,7 @@ const useUnitsActions = () => {
         set(listUnitIdsState(currentListId), (currVal) =>
           currVal.filter((unitId) => unitId !== id)
         );
-        set(listUnitIdsState(listId), (currVal) => [...currVal, listId]);
+        set(listUnitIdsState(listId), (currVal) => [...currVal, id]);
       },
     []
   );
