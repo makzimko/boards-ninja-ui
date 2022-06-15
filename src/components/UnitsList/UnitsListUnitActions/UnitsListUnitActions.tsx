@@ -49,7 +49,7 @@ const UnitsListUnitActions: FC<GridRowDetailsProps> = ({ id, close }) => {
   );
 
   return (
-    <div>
+    <>
       {!moving && (
         <Popup onMaskClick={close}>
           <Menu items={items} onItemClick={itemClickHandler} />
@@ -60,7 +60,7 @@ const UnitsListUnitActions: FC<GridRowDetailsProps> = ({ id, close }) => {
           <MoveUnit id={id} containerClassName={styles['move-units']} />
         </Popup>
       )}
-    </div>
+    </>
   );
 };
 

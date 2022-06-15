@@ -1,17 +1,11 @@
-import React, {
-  ChangeEventHandler,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { useParams } from 'react-router-dom';
 
 import { LOADING } from '../../atoms/loading';
 import Button from '../../ui/Button';
 import useUnitsActions, { unitState } from '../../atoms/units';
-import useListsActions, { listsListState } from '../../atoms/lists';
+import useListsActions from '../../atoms/lists';
 
 import styles from './UnitDetails.module.scss';
 import Grid, {

@@ -12,7 +12,6 @@ import InlineCreate from '../InlineCreate/InlineCreate';
 import UnitsListActions from './UnitsListActions/UnitsListActions';
 import UnitsListUnitActions from './UnitsListUnitActions/UnitsListUnitActions';
 import styles from './UnitsList.module.scss';
-import unitDetails from '../../pages/UnitDetails/UnitDetails';
 
 const statusColorFormatter: GridRowStatusColorFormatter = (value) => {
   const { completed } = value as unknown as Unit;
