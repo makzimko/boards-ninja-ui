@@ -5,9 +5,9 @@ import { useRecoilValue } from 'recoil';
 import useListsActions, { listsListState } from '../../atoms/lists';
 import UnitsList from '../../components/UnitsList/UnitsList';
 import CreateList from '../../components/CreateList/CreateList';
+import { LOADING } from '../../atoms/loading';
 
 import styles from './ProjectLists.module.scss';
-import { LOADING } from '../../atoms/loading';
 
 const ProjectLists = () => {
   const { projectKey } = useParams();
