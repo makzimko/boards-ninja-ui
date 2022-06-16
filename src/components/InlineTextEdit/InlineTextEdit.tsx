@@ -7,18 +7,24 @@ import React, {
   useRef,
   useState,
 } from 'react';
+import classNames from 'classnames';
 
 import styles from './InlineTextEdit.module.scss';
 import Button from '../../ui/Button';
+import { InlineTextEditSubmitHandler } from './types';
 
 export type InlineTextEditProps = {
   value: string;
-  onSubmit?: (value: string) => void;
+  onSubmit?: InlineTextEditSubmitHandler;
+  valueClassName?: string;
+  inputClassName?: string;
 };
 
 const InlineTextEdit: FC<InlineTextEditProps> = ({
   value: defaultValue,
   onSubmit,
+  valueClassName,
+  inputClassName,
 }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [value, setValue] = useState(defaultValue);
@@ -53,12 +59,12 @@ const InlineTextEdit: FC<InlineTextEditProps> = ({
   const handleSubmit = useCallback<FormEventHandler>(
     (e) => {
       e.preventDefault();
-      if (onSubmit) {
+      if (onSubmit && value !== defaultValue) {
         onSubmit(value);
       }
       toggleEditing();
     },
-    [value, onSubmit, toggleEditing]
+    [value, defaultValue, onSubmit, toggleEditing]
   );
 
   useEffect(() => {
@@ -90,7 +96,7 @@ const InlineTextEdit: FC<InlineTextEditProps> = ({
         >
           <input
             type="text"
-            className={styles.input}
+            className={classNames(styles.input, inputClassName)}
             value={value}
             onChange={handleChange}
             placeholder="some placeholder..."
@@ -101,7 +107,10 @@ const InlineTextEdit: FC<InlineTextEditProps> = ({
           </Button>
         </form>
       ) : (
-        <div onClick={toggleEditing} className={styles.value}>
+        <div
+          onClick={toggleEditing}
+          className={classNames(styles.value, valueClassName)}
+        >
           {defaultValue}
         </div>
       )}

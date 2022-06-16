@@ -14,7 +14,9 @@ import Grid, {
   GridItem,
 } from '../../components/Grid';
 import MoveUnit from '../../components/MoveUnit/MoveUnit';
-import InlineTextEdit from '../../components/InlineTextEdit';
+import InlineTextEdit, {
+  InlineTextEditSubmitHandler,
+} from '../../components/InlineTextEdit';
 
 const UNIT_DETAILS_FIELD = ['id', 'name', 'completed', 'project', 'list'];
 const valueFormatter: GridColumnFormatter = ({ id }, value) => {
@@ -72,6 +74,15 @@ const UnitDetails = () => {
     }
   }, [updateById, unitDetails]);
 
+  const handleNameChange = useCallback<InlineTextEditSubmitHandler>(
+    (name) => {
+      if (id && name) {
+        updateById(id, { name });
+      }
+    },
+    [updateById, id]
+  );
+
   const handleRemove = useCallback(() => {
     if (id) {
       removeById(id);
@@ -92,12 +103,7 @@ const UnitDetails = () => {
 
   return (
     <div className={styles.wrapper}>
-      <hr />
-      <InlineTextEdit
-        value={unitDetails.name}
-        onSubmit={(a) => console.log('CHANGE', a)}
-      />
-      <hr />
+      <InlineTextEdit value={unitDetails.name} onSubmit={handleNameChange} />
       <div className={styles.actions}>
         <Button onClick={changeCompleteness}>
           Set as {unitDetails.completed ? 'incomplete' : 'completed'}
