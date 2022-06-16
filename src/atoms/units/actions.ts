@@ -29,8 +29,14 @@ const useUnitsActions = () => {
   );
 
   const fetchById = useRecoilCallback(
-    ({ set }) =>
-      async (id: UnitId) => {
+    ({ set, snapshot }) =>
+      async (id: UnitId, force = false) => {
+        const unitData = snapshot.getLoadable(unitState(id)).contents;
+
+        if (!force && unitData) {
+          return;
+        }
+
         const { data } = await axios.get<ApiUnit>(`/v1/units/${id}`);
 
         const { _id, ...rest } = data;

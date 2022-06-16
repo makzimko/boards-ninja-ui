@@ -14,6 +14,7 @@ import ProjectsList from './components/ProjectsList/ProjectsList';
 import UnitDetails from './pages/UnitDetails/UnitDetails';
 import ProjectLists from './pages/ProjectLists/ProjectLists';
 import Header from "./components/Header";
+import Breadcrumbs from "./components/Breadcrumbs";
 
 const App: FC = () => {
   const { fetchUserInfo } = useAuthActions();
@@ -32,7 +33,16 @@ const App: FC = () => {
             index
             element={
               <AuthWrapper>
-                <ProjectsList />
+                <div>
+                  <Breadcrumbs
+                      items={[
+                          { id: 'home', name: 'home' },
+                          { id: 'project', name: 'project name' },
+                          { id: 'unit', name: 'unit name' },
+                      ]}
+                  />
+                  <ProjectsList />
+                </div>
               </AuthWrapper>
             }
           />

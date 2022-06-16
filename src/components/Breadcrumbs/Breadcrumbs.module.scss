@@ -1,0 +1,21 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+  overflow-x: auto;
+  white-space: nowrap;
+
+  .item {
+    font-size: 12px;
+    padding: 8px;
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .divider {
+    margin: 0 8px;
+  }
+}
