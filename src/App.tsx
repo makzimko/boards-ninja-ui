@@ -13,6 +13,7 @@ import HomePage from './pages/Home/HomePage';
 import ProjectsList from './components/ProjectsList/ProjectsList';
 import UnitDetails from './pages/UnitDetails/UnitDetails';
 import ProjectLists from './pages/ProjectLists/ProjectLists';
+import Header from "./components/Header";
 
 const App: FC = () => {
   const { fetchUserInfo } = useAuthActions();
@@ -24,10 +25,7 @@ const App: FC = () => {
 
   return [LOADING.SUCCESS, LOADING.ERROR].includes(authLoading) ? (
     <Router>
-      <nav>
-        <Link to="/">Home</Link>
-        <Link to="/projects">Project</Link>
-      </nav>
+      <Header />
       <Routes>
         <Route path="projects">
           <Route

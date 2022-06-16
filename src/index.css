@@ -12,6 +12,14 @@ code {
     monospace;
 }
 
+input, button {
+  border-radius: 0;
+}
+
+input[type="search"] {
+  -webkit-appearance: none;
+}
+
 
 #popup {
   position: fixed;

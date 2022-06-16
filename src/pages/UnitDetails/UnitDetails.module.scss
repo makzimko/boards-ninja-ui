@@ -1,5 +1,22 @@
 .wrapper {
-  padding: 8px;
+  padding: 16px 8px;
+
+  .name {
+    .title {
+      &-value {
+        font-size: 24px;
+        padding: 0 8px;
+        line-height: 34px;
+      }
+      &-input {
+        font-size: 24px;
+        padding: 0 8px;
+        line-height: 34px;
+        height: 34px;
+      }
+    }
+
+  }
 
   .actions {
     display: flex;

@@ -1,9 +1,9 @@
 import React, { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
+import classNames from 'classnames';
 
-import useUnitsActions from '../../atoms/units/actions';
-import { listUnitsState } from '../../atoms/units/atoms';
+import useUnitsActions, { listUnitsState } from '../../atoms/units';
 import SimpleList from '../SimpleList';
 import { GridRowStatusColorFormatter } from '../Grid';
 import { Unit } from '../../types/unit';
@@ -11,6 +11,8 @@ import InlineCreate from '../InlineCreate/InlineCreate';
 
 import UnitsListActions from './UnitsListActions/UnitsListActions';
 import UnitsListUnitActions from './UnitsListUnitActions/UnitsListUnitActions';
+import { ComponentProps } from '../../types/component';
+
 import styles from './UnitsList.module.scss';
 
 const statusColorFormatter: GridRowStatusColorFormatter = (value) => {
@@ -25,9 +27,14 @@ type UnitsListProps = {
   id: string;
   name: string;
   predefined: boolean;
-};
+} & ComponentProps;
 
-const UnitsList: FC<UnitsListProps> = ({ id, name, predefined = false }) => {
+const UnitsList: FC<UnitsListProps> = ({
+  id,
+  name,
+  predefined = false,
+  containerClassName,
+}) => {
   const { fetchByListId, createUnitInList } = useUnitsActions();
   const listUnits = useRecoilValue(listUnitsState(id));
   const [newItemName, setNewItemName] = useState('');
@@ -65,7 +72,7 @@ const UnitsList: FC<UnitsListProps> = ({ id, name, predefined = false }) => {
   }, [id, fetchByListId]);
 
   return (
-    <div className={styles.wrapper}>
+    <div className={classNames(styles.wrapper, containerClassName)}>
       <SimpleList
         title={predefined ? 'Units backlog' : name}
         items={formattedUnitsList}

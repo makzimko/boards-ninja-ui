@@ -8,6 +8,7 @@ import useUnitsActions, { unitState } from '../../atoms/units';
 import useListsActions from '../../atoms/lists';
 
 import styles from './UnitDetails.module.scss';
+
 import Grid, {
   GridColumn,
   GridColumnFormatter,
@@ -103,7 +104,14 @@ const UnitDetails = () => {
 
   return (
     <div className={styles.wrapper}>
-      <InlineTextEdit value={unitDetails.name} onSubmit={handleNameChange} />
+      <div className={styles.name}>
+        <InlineTextEdit
+          value={unitDetails.name}
+          onSubmit={handleNameChange}
+          inputClassName={styles['title-input']}
+          valueClassName={styles['title-value']}
+        />
+      </div>
       <div className={styles.actions}>
         <Button onClick={changeCompleteness}>
           Set as {unitDetails.completed ? 'incomplete' : 'completed'}
