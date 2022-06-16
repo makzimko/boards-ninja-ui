@@ -14,6 +14,7 @@ import Grid, {
   GridItem,
 } from '../../components/Grid';
 import MoveUnit from '../../components/MoveUnit/MoveUnit';
+import InlineTextEdit from '../../components/InlineTextEdit';
 
 const UNIT_DETAILS_FIELD = ['id', 'name', 'completed', 'project', 'list'];
 const valueFormatter: GridColumnFormatter = ({ id }, value) => {
@@ -91,6 +92,12 @@ const UnitDetails = () => {
 
   return (
     <div className={styles.wrapper}>
+      <hr />
+      <InlineTextEdit
+        value={unitDetails.name}
+        onSubmit={(a) => console.log('CHANGE', a)}
+      />
+      <hr />
       <div className={styles.actions}>
         <Button onClick={changeCompleteness}>
           Set as {unitDetails.completed ? 'incomplete' : 'completed'}
