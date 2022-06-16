@@ -1,16 +1,15 @@
-import React, {
-  ChangeEventHandler,
-  FC,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react';
+import React, { FC, useCallback, useEffect, useMemo, useState } from 'react';
+import { useRecoilValue } from 'recoil';
+
 import Button from '../../ui/Button';
 import useUnitsActions, { UnitId, unitState } from '../../atoms/units';
-import { useRecoilValue } from 'recoil';
 import { listsListState } from '../../atoms/lists';
 import { ComponentProps } from '../../types/component';
+import Select from '../../ui/Select';
+import { SelectChangeHandler } from '../../ui/Select/types';
+
+import styles from './MoveUnit.module.scss';
+import classNames from 'classnames';
 
 type MoveUnitProps = {
   id: UnitId;
@@ -27,12 +26,9 @@ const MoveUnit: FC<MoveUnitProps> = ({ id, containerClassName }) => {
     [lists, unit]
   );
 
-  const handleListChange = useCallback<ChangeEventHandler<HTMLSelectElement>>(
-    ({ currentTarget }) => {
-      setNewList(currentTarget.value);
-    },
-    []
-  );
+  const handleListChange = useCallback<SelectChangeHandler>((value) => {
+    setNewList(value);
+  }, []);
 
   useEffect(() => {
     if (otherLists.length > 0) {
@@ -47,14 +43,8 @@ const MoveUnit: FC<MoveUnitProps> = ({ id, containerClassName }) => {
   }, [newList, moveUnit]);
 
   return (
-    <div className={containerClassName}>
-      <select onChange={handleListChange} value={newList}>
-        {otherLists.map(({ id, name }) => (
-          <option key={id} value={id}>
-            {name}
-          </option>
-        ))}
-      </select>
+    <div className={classNames(styles.wrapper, containerClassName)}>
+      <Select items={otherLists} onChange={handleListChange} value={newList} />
       <Button onClick={handleMove}>Move</Button>
     </div>
   );

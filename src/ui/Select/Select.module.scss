@@ -1,0 +1,29 @@
+@import '../../styles/colors';
+
+.wrapper {
+  position: relative;
+  display: inline-block;
+
+
+  .select {
+    padding: 8px 24px 8px 8px;
+    line-height: 18px;
+    background: $white;
+    border: 1px solid  $light-grey-2;
+    border-radius: 0;
+    color: $dark-grey-6;
+    margin: 0;
+    outline: 0;
+    -webkit-appearance: none;
+  }
+
+  &:after {
+    content: '\0025BE';
+    color: $dark-grey-6;
+    right: 8px;
+    top: 6px;
+    position: absolute;
+    display: block;
+    pointer-events: none;
+  }
+}
