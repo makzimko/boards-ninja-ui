@@ -18,6 +18,8 @@ import MoveUnit from '../../components/MoveUnit/MoveUnit';
 import InlineTextEdit, {
   InlineTextEditSubmitHandler,
 } from '../../components/InlineTextEdit';
+import useNotificationActions from '../../atoms/notification/actions';
+import { NotificationType } from '../../atoms/notification';
 
 const UNIT_DETAILS_FIELD = ['id', 'name', 'completed', 'project', 'list'];
 const valueFormatter: GridColumnFormatter = ({ id }, value) => {
@@ -40,6 +42,7 @@ const UnitDetails = () => {
   const [fetchStatus, setFetchStatus] = useState(LOADING.INITIAL);
   const unitDetails = useRecoilValue(unitState(id ?? ''));
   const { fetch: fetchLists } = useListsActions();
+  const { notify } = useNotificationActions();
 
   const gridData = useMemo<GridItem[]>(() => {
     if (!unitDetails) {
@@ -71,7 +74,14 @@ const UnitDetails = () => {
 
   const changeCompleteness = useCallback(() => {
     if (id && unitDetails) {
-      updateById(id, { completed: !unitDetails.completed });
+      updateById(id, { completed: !unitDetails.completed }).then(() =>
+        notify(
+          unitDetails.completed
+            ? 'Marked as not completed'
+            : 'Marked as completed',
+          { type: NotificationType.Success }
+        )
+      );
     }
   }, [updateById, unitDetails]);
 

@@ -13,8 +13,9 @@ import HomePage from './pages/Home/HomePage';
 import ProjectsList from './components/ProjectsList/ProjectsList';
 import UnitDetails from './pages/UnitDetails/UnitDetails';
 import ProjectLists from './pages/ProjectLists/ProjectLists';
-import Header from "./components/Header";
-import Breadcrumbs from "./components/Breadcrumbs";
+import Header from './components/Header';
+import Breadcrumbs from './components/Breadcrumbs';
+import Notification from './components/Notification';
 
 const App: FC = () => {
   const { fetchUserInfo } = useAuthActions();
@@ -27,6 +28,7 @@ const App: FC = () => {
   return [LOADING.SUCCESS, LOADING.ERROR].includes(authLoading) ? (
     <Router>
       <Header />
+      <Notification />
       <Routes>
         <Route path="projects">
           <Route
@@ -35,11 +37,11 @@ const App: FC = () => {
               <AuthWrapper>
                 <div>
                   <Breadcrumbs
-                      items={[
-                          { id: 'home', name: 'home' },
-                          { id: 'project', name: 'project name' },
-                          { id: 'unit', name: 'unit name' },
-                      ]}
+                    items={[
+                      { id: 'home', name: 'home' },
+                      { id: 'project', name: 'project name' },
+                      { id: 'unit', name: 'unit name' },
+                    ]}
                   />
                   <ProjectsList />
                 </div>

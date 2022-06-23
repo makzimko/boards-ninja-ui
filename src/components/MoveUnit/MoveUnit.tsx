@@ -10,6 +10,7 @@ import { SelectChangeHandler } from '../../ui/Select/types';
 
 import styles from './MoveUnit.module.scss';
 import classNames from 'classnames';
+import useNotificationActions from '../../atoms/notification/actions';
 
 type MoveUnitProps = {
   id: UnitId;
@@ -20,6 +21,7 @@ const MoveUnit: FC<MoveUnitProps> = ({ id, containerClassName }) => {
   const [newList, setNewList] = useState('');
   const unit = useRecoilValue(unitState(id));
   const lists = useRecoilValue(listsListState);
+  const { notify } = useNotificationActions();
 
   const otherLists = useMemo(
     () => (unit ? lists.filter(({ id }) => id !== unit.list) : []),
@@ -38,9 +40,14 @@ const MoveUnit: FC<MoveUnitProps> = ({ id, containerClassName }) => {
 
   const handleMove = useCallback(() => {
     if (id) {
-      moveUnit(id, newList);
+      const listName = (
+        otherLists.find(({ id }) => id === newList) || { name: 'another list' }
+      ).name;
+      moveUnit(id, newList).then(() =>
+        notify(`Successfully moved to ${listName}`)
+      );
     }
-  }, [newList, moveUnit]);
+  }, [newList, moveUnit, lists]);
 
   return (
     <div className={classNames(styles.wrapper, containerClassName)}>

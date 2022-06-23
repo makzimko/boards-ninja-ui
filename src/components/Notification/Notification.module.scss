@@ -1,0 +1,50 @@
+@import '../../styles/colors';
+
+.wrapper {
+  position: fixed;
+  display: flex;
+  width: 100%;
+  height: 0;
+  flex-direction: column;
+  align-items: center;
+  z-index: 1;
+
+  @keyframes slideInFromLeft {
+    0% {
+      transform: translateY(100%);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  .notification {
+    margin: 8px;
+    padding: 8px 16px;
+    background: $white;
+    box-shadow: 0 0 10px $light-grey-2;
+    animation: 0.3s ease-out slideInFromLeft;
+
+    .icon {
+      margin-right: 8px;
+
+      &-info {
+        color: $state-info;
+      }
+
+      &-success {
+        color: $state-success;
+      }
+
+      &-error {
+        color: $state-error;
+      }
+
+      &-warning {
+        color: $state-warning;
+      }
+    }
+  }
+}
