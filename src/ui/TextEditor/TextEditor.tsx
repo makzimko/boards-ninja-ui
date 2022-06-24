@@ -31,7 +31,7 @@ const TextEditor: FC<TextEditorProps> = ({
   valueClassName,
   inputClassName,
 }) => {
-  const [isEditing, setIsEditing] = useState(true);
+  const [isEditing, setIsEditing] = useState(false);
   const [value, setValue] = useState<string>('');
   const ref = useRef<HTMLTextAreaElement>(null);
   const [isFocused, setIsFocused] = useState(false);
