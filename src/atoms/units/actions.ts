@@ -72,6 +72,21 @@ const useUnitsActions = () => {
     []
   );
 
+  const updateFieldsById = useRecoilCallback(
+    ({ set }) =>
+      async (id: UnitId, props: Partial<Unit['data']>) => {
+        const { data } = await axios.patch<ApiUnit>(
+          `/v1/units/${id}/data`,
+          props
+        );
+
+        const { _id, ...rest } = data;
+
+        set(unitState(_id), { id: _id, ...rest });
+      },
+    []
+  );
+
   const createUnitInList = useRecoilCallback(
     ({ set }) =>
       async ({ name, listId }: Pick<Unit, 'name'> & { listId: ListId }) => {
@@ -137,6 +152,7 @@ const useUnitsActions = () => {
     fetchById,
     updateById,
     toggleCompleteness,
+    updateFieldsById,
     createUnitInList,
     removeById,
     moveUnit,

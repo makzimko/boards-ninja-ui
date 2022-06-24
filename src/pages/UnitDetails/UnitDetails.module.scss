@@ -16,12 +16,16 @@
         height: 34px;
       }
     }
+  }
 
+  .summary {
+    margin: 16px 0;
   }
 
   .actions {
     display: flex;
     gap: 8px;
     margin: 16px 0;
+    overflow: auto;
   }
 }

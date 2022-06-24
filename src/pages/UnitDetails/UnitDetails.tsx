@@ -20,6 +20,7 @@ import InlineTextEdit, {
 } from '../../components/InlineTextEdit';
 import useNotificationActions from '../../atoms/notification/actions';
 import { NotificationType } from '../../atoms/notification';
+import TextEditor from '../../ui/TextEditor';
 
 const UNIT_DETAILS_FIELD = ['id', 'name', 'completed', 'project', 'list'];
 const valueFormatter: GridColumnFormatter = ({ id }, value) => {
@@ -37,7 +38,8 @@ const UNIT_DETAILS_GRID_COLUMNS: GridColumn[] = [
 ];
 
 const UnitDetails = () => {
-  const { fetchById, removeById, updateById } = useUnitsActions();
+  const { fetchById, removeById, updateById, updateFieldsById } =
+    useUnitsActions();
   const { id, projectKey } = useParams();
   const [fetchStatus, setFetchStatus] = useState(LOADING.INITIAL);
   const unitDetails = useRecoilValue(unitState(id ?? ''));
@@ -94,6 +96,15 @@ const UnitDetails = () => {
     [updateById, id]
   );
 
+  const handleSummaryChange = useCallback<InlineTextEditSubmitHandler>(
+    (summary) => {
+      if (id) {
+        updateFieldsById(id, { summary: summary || null });
+      }
+    },
+    [updateFieldsById, id]
+  );
+
   const handleRemove = useCallback(() => {
     if (id) {
       removeById(id);
@@ -126,9 +137,15 @@ const UnitDetails = () => {
         <Button onClick={changeCompleteness}>
           Set as {unitDetails.completed ? 'incomplete' : 'completed'}
         </Button>
+        {id && <MoveUnit id={id} />}
         <Button onClick={handleRemove}>Remove</Button>
       </div>
-      {id && <MoveUnit id={id} />}
+      <TextEditor
+        value={((unitDetails.data || {}).summary as string) || ''}
+        onSubmit={handleSummaryChange}
+        placeholder="Summary should be here..."
+        wrapperClassName={styles.summary}
+      />
       <Grid
         items={gridData}
         columns={UNIT_DETAILS_GRID_COLUMNS}

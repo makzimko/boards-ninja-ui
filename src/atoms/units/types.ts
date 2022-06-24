@@ -6,6 +6,7 @@ export type ApiUnit = {
   project: string;
   list: string;
   completed: boolean;
+  data?: Record<string, unknown>;
 };
 
 export type Unit = Omit<ApiUnit, '_id'> & {
