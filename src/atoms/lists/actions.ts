@@ -3,6 +3,7 @@ import axios from 'axios';
 
 import { ApiList, ListId } from './types';
 import { listState, listIdsState } from './atoms';
+import { listUnitIdsState, UnitId, unitState } from '../units';
 
 const useListsActions = () => {
   const fetch = useRecoilCallback(
@@ -50,7 +51,36 @@ const useListsActions = () => {
     []
   );
 
-  return { fetch, createListInProject };
+  const remove = useRecoilCallback(
+    ({ set }) =>
+      async (listId: ListId, destination: ListId) => {
+        const { data } = await axios.delete<{ moved: UnitId[] }>(
+          `/v1/lists/${listId}`,
+          {
+            data: { destination },
+          }
+        );
+
+        set(listIdsState, (prevValue) =>
+          prevValue.filter((id) => listId !== id)
+        );
+
+        data.moved.forEach((unitId) =>
+          set(unitState(unitId), (prevState) => ({
+            ...prevState,
+            list: destination,
+          }))
+        );
+
+        set(listUnitIdsState(destination), (prevValue) => [
+          ...prevValue,
+          ...data.moved,
+        ]);
+      },
+    []
+  );
+
+  return { fetch, createListInProject, remove };
 };
 
 export default useListsActions;
